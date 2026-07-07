@@ -331,6 +331,14 @@ img { max-width: 100%; display: block; }
 }
 .about-text { color: var(--text-dim); font-size: 1.02rem; }
 .about-text strong { color: var(--text); }
+.about-text a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--cyan);
+  transition: color .2s ease, border-color .2s ease;
+}
+.about-text a strong { color: var(--cyan); }
+.about-text a:hover { border-color: var(--violet); }
+.about-text a:hover strong { color: var(--violet); }
 .about-facts {
   display: flex;
   flex-direction: column;
