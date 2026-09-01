@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "fingerprint": {
+    "configHash": "6e340b9cffb37a98",
+    "gitHead": "354c4dae16362e3164b546104213d7ed8e5c7de2"
+  },
+  "generatedAt": "2026-09-01T09:58:13.416Z",
+  "patterns": {
+    "naming": {
+      "fileNaming": {
+        "style": "camelCase",
+        "confidence": "low",
+        "sampleSize": 1
+      },
+      "functionNaming": {
+        "style": "camelCase",
+        "confidence": "high",
+        "sampleSize": 35
+      },
+      "testPattern": null,
+      "componentExtensions": []
+    },
+    "imports": {
+      "namedImportRatio": 0,
+      "pathAliases": [],
+      "barrelFileCount": 0,
+      "layerWarnings": []
+    },
+    "architecture": {
+      "layers": [
+        {
+          "name": "js",
+          "path": "js",
+          "fileCount": 1
+        }
+      ],
+      "frameworkMarkers": [],
+      "statePatterns": [],
+      "errorPatterns": [],
+      "testFramework": null
+    },
+    "style": {
+      "indentation": "4 spaces",
+      "quoteStyle": "single",
+      "semicolons": "present",
+      "arrowFunctionRatio": 0.63,
+      "asyncAwaitRatio": 0
+    },
+    "api": {
+      "apiStyles": [],
+      "authPatterns": [],
+      "eventPatterns": [],
+      "dataFetchers": []
+    }
+  }
+}
