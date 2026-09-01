@@ -5,286 +5,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yves Loïc SOATIANAINA — AI &amp; LLMOps Engineer</title>
-    <meta name="description"
-        content="Portfolio de Yves Loïc SOATIANAINA, AI & LLMOps Engineer — LLM infrastructure, AI agents, RAG & MLOps. Swiftask & ia-souveraine.fr.">
-    <link rel="icon" type="image/png" href="assets/img/LogoYL.png">
+    <meta name="description" content="Portfolio de Yves Loïc SOATIANAINA, AI & LLMOps Engineer.">
+    <link rel="icon" type="image/png" href="assets/img/linuxlogoimages.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&family=Sora:wght@600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
 
         :root {
-            --bg: #070b14;
-            --accent: #2dd4bf;
-            --accent2: #818cf8;
+            --bg: #fff;
+            --fg: #111;
+            --muted: #666;
+            --border: #e2e2e2;
+            --surface: #f7f7f7
+        }
+
+        [data-theme=dark] {
+            --bg: #0a0a0a;
+            --fg: #f0f0f0;
+            --muted: #999;
+            --border: #222;
+            --surface: #141414
+        }
+
+        * {
+            transition: background-color .3s ease, color .3s ease, border-color .3s ease
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: #e2e8f0;
+            background: var(--bg);
+            color: var(--fg);
             scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        h1,
-        h2,
-        h3,
-        .display {
-            font-family: 'Sora', sans-serif;
+            overflow-x: hidden
         }
 
         .code-font {
-            font-family: 'Fira Code', monospace;
+            font-family: 'Fira Code', monospace
         }
 
-        /* ---------- aurora hero background ---------- */
-        .aurora {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            z-index: 0;
-            pointer-events: none;
+        .text-muted {
+            color: var(--muted)
         }
 
-        .aurora::before,
-        .aurora::after {
-            content: '';
-            position: absolute;
-            width: 60vw;
-            height: 60vw;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: .35;
-            animation: drift 18s ease-in-out infinite alternate;
+        .border-default {
+            border-color: var(--border)
         }
 
-        .aurora::before {
-            background: radial-gradient(circle, #2dd4bf, transparent 70%);
-            top: -20%;
-            left: -10%;
+        .bg-surface {
+            background: var(--surface)
         }
 
-        .aurora::after {
-            background: radial-gradient(circle, #818cf8, transparent 70%);
-            bottom: -25%;
-            right: -10%;
-            animation-delay: -9s;
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: transform .3s ease, border-color .3s ease
         }
 
-        @keyframes drift {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            100% {
-                transform: translate(6%, 8%) scale(1.15);
-            }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--fg)
         }
 
-        /* subtle grid overlay */
-        .grid-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-image:
-                linear-gradient(rgba(148, 163, 184, .05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148, 163, 184, .05) 1px, transparent 1px);
-            background-size: 48px 48px;
-            mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+        .tag {
+            font-size: 11px;
+            color: var(--muted);
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg)
         }
 
-        /* ---------- glass ---------- */
-        .glass {
-            background: rgba(13, 20, 38, 0.55);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(148, 163, 184, 0.12);
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            transition: all .25s ease
         }
 
-        /* gradient border card */
-        .glow-card {
-            position: relative;
-            background: rgba(13, 20, 38, 0.5);
-            backdrop-filter: blur(16px);
-            border-radius: 18px;
-            border: 1px solid transparent;
+        .btn-primary {
+            background: var(--fg);
+            color: var(--bg);
+            border-color: var(--fg)
         }
 
-        .glow-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(45, 212, 191, .4), rgba(129, 140, 248, .25), transparent 60%);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: .6;
-            transition: opacity .4s ease;
+        .btn-primary:hover {
+            opacity: .85
         }
 
-        .glow-card:hover::before {
-            opacity: 1;
+        .btn-outline {
+            background: transparent;
+            color: var(--fg)
         }
 
-        .gradient-text {
-            background: linear-gradient(90deg, #2dd4bf, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .btn-outline:hover {
+            border-color: var(--fg);
+            background: var(--surface)
         }
 
-        .gradient-text-2 {
-            background: linear-gradient(90deg, #f472b6, #2dd4bf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* nav underline */
         .nav-link {
             position: relative;
+            color: var(--muted);
+            font-size: 14px
         }
 
         .nav-link::after {
             content: '';
             position: absolute;
             left: 0;
-            bottom: -5px;
+            bottom: -4px;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #2dd4bf, #818cf8);
-            transition: width .3s ease;
+            background: var(--fg);
+            transition: width .3s ease
         }
 
         .nav-link:hover {
-            color: #2dd4bf;
+            color: var(--fg)
         }
 
         .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .lift {
-            transition: transform .4s cubic-bezier(.2, .8, .2, 1), box-shadow .4s ease;
-        }
-
-        .lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 50px -24px rgba(45, 212, 191, 0.3);
-        }
-
-        .tag-pill {
-            font-size: 10px;
-            background: rgba(45, 212, 191, 0.1);
-            color: #5eead4;
-            padding: 3px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(45, 212, 191, 0.22);
-        }
-
-        /* primary button shine */
-        .btn-primary {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(90deg, #2dd4bf, #6366f1);
-            color: #04111a;
-        }
-
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .45), transparent);
-            transform: skewX(-20deg);
-            transition: left .6s ease;
-        }
-
-        .btn-primary:hover::after {
-            left: 140%;
+            width: 100%
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity .8s ease, transform .8s ease;
+            transform: translateY(24px);
+            transition: opacity .7s ease, transform .7s ease
         }
 
         .reveal.in {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0)
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media(prefers-reduced-motion:reduce) {
             .reveal {
                 opacity: 1;
-                transform: none;
+                transform: none
             }
         }
 
-        /* marquee */
-        .marquee {
-            overflow: hidden;
-            -webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-        }
-
-        .marquee-track {
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--fg);
+            cursor: pointer;
             display: flex;
-            gap: 3rem;
-            width: max-content;
-            animation: scroll 28s linear infinite;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s ease
         }
 
-        @keyframes scroll {
-            to {
-                transform: translateX(-50%);
-            }
+        .theme-btn:hover {
+            border-color: var(--fg)
         }
 
-        /* floating chips on hero */
-        .float-chip {
-            animation: floaty 6s ease-in-out infinite;
-        }
-
-        .float-chip:nth-child(2) {
-            animation-delay: -2s;
-        }
-
-        .float-chip:nth-child(3) {
-            animation-delay: -4s;
-        }
-
-        @keyframes floaty {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-12px);
-            }
-        }
-
-        /* ---------- carrousel réalisations ---------- */
         .carousel {
             position: relative;
-            overflow: hidden;
+            overflow: hidden
         }
 
         .carousel-track {
             display: flex;
-            transition: transform .6s cubic-bezier(.2, .8, .2, 1);
-            will-change: transform;
+            transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+            will-change: transform
         }
 
         .carousel-slide {
             flex: 0 0 100%;
-            min-width: 100%;
-            padding: 0 .25rem;
+            min-width: 100%
         }
 
         .carousel-btn {
@@ -292,630 +191,495 @@
             top: 50%;
             transform: translateY(-50%);
             z-index: 20;
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(13, 20, 38, .8);
-            border: 1px solid rgba(148, 163, 184, .2);
-            color: #e2e8f0;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--fg);
             cursor: pointer;
-            backdrop-filter: blur(8px);
-            transition: background .25s ease, border-color .25s ease, color .25s ease;
+            transition: all .25s ease
         }
 
         .carousel-btn:hover {
-            background: rgba(45, 212, 191, .15);
-            border-color: rgba(45, 212, 191, .5);
-            color: #2dd4bf;
+            border-color: var(--fg)
         }
 
         .carousel-btn.prev {
-            left: -10px;
+            left: -8px
         }
 
         .carousel-btn.next {
-            right: -10px;
+            right: -8px
         }
 
         .carousel-dots {
             display: flex;
             justify-content: center;
             gap: 8px;
-            margin-top: 28px;
+            margin-top: 24px
         }
 
         .carousel-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 999px;
-            background: rgba(148, 163, 184, .25);
+            background: var(--border);
             border: none;
             cursor: pointer;
-            transition: background .25s ease, width .25s ease;
+            transition: all .25s ease
         }
 
         .carousel-dot.active {
-            background: linear-gradient(90deg, #2dd4bf, #818cf8);
-            width: 28px;
+            background: var(--fg);
+            width: 24px
         }
 
         .slide-num {
             position: absolute;
-            top: 1.25rem;
-            right: 1.25rem;
+            top: 1rem;
+            right: 1rem;
             font-family: 'Fira Code', monospace;
             font-size: .72rem;
-            color: rgba(148, 163, 184, .5);
-            z-index: 5;
+            color: var(--muted);
+            z-index: 5
         }
     </style>
 </head>
 
 <body>
-    <div class="grid-overlay"></div>
-
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass py-4 px-6 flex justify-between items-center">
-        <a href="#home" class="text-xl font-bold code-font gradient-text">&lt;YL /&gt;</a>
-        <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+    <nav class="fixed w-full z-50 py-4 px-6 flex justify-between items-center border-b border-default bg-surface"
+        style="backdrop-filter:blur(10px)">
+        <a href="#home" class="text-lg font-bold code-font">&lt;YL /&gt;</a>
+        <div class="hidden md:flex space-x-7">
             <a href="#home" class="nav-link">Accueil</a>
             <a href="#work" class="nav-link">Réalisations</a>
             <a href="#skills" class="nav-link">Outils</a>
             <a href="#awards" class="nav-link">Distinctions</a>
             <a href="#contact" class="nav-link">Contact</a>
         </div>
-        <div class="md:hidden">
-            <button id="menuBtn" class="fas fa-bars text-2xl cursor-pointer text-slate-200" aria-label="Menu"></button>
+        <div class="flex items-center gap-3">
+            <button id="themeBtn" class="theme-btn" aria-label="Changer le thème"><i
+                    class="fas fa-moon text-sm"></i></button>
+            <button id="menuBtn" class="fas fa-bars text-xl cursor-pointer md:hidden" aria-label="Menu"></button>
         </div>
     </nav>
-
-    <!-- Mobile menu -->
     <div id="mobileMenu"
-        class="hidden fixed top-16 left-0 right-0 glass z-40 flex flex-col items-center py-6 space-y-4 text-sm font-medium md:hidden">
+        class="hidden fixed top-16 left-0 right-0 z-40 flex flex-col items-center py-6 space-y-4 text-sm font-medium md:hidden bg-surface border-b border-default">
         <a href="#home" class="nav-link">Accueil</a>
         <a href="#work" class="nav-link">Réalisations</a>
         <a href="#skills" class="nav-link">Outils</a>
         <a href="#awards" class="nav-link">Distinctions</a>
         <a href="#contact" class="nav-link">Contact</a>
     </div>
-
-    <!-- HERO -->
-    <section id="home" class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
-        <div class="aurora"></div>
-        <div class="relative z-10">
-            <div
-                class="mb-6 px-4 py-1.5 border border-teal-400/30 rounded-full text-teal-300 text-xs font-medium uppercase tracking-widest animate-pulse">
-                <span class="inline-block w-2 h-2 rounded-full bg-teal-400 mr-2 align-middle"></span>Disponible pour de
-                nouvelles opportunités
-            </div>
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4 leading-[1.05]">
-                Yves Loïc<br><span class="gradient-text">SOATIANAINA</span>
-            </h1>
-            <p class="code-font text-base md:text-xl text-slate-300 mb-8">
-                <span class="text-teal-400">AI Engineer</span> <span class="text-slate-600">//</span> <span
-                    class="text-indigo-400">LLMOps Engineer</span>
-            </p>
-            <p class="text-slate-400 text-base md:text-lg max-w-2xl mb-10 leading-relaxed">
-                Je conçois et déploie des <span class="text-slate-100 font-semibold">agents IA</span> et des
-                applications
-                basées sur des <span class="text-slate-100 font-semibold">LLM</span>, du prototype au système de
-                production — pipelines LLMOps, infrastructure Kubernetes, RAG &amp; observabilité, en full remote depuis
-                Antananarivo.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#work"
-                    class="btn-primary px-8 py-3 rounded-lg font-bold transition-all flex items-center space-x-2">
-                    <span>Mes réalisations</span><i class="fas fa-arrow-right text-xs"></i>
-                </a>
-                <a href="#contact"
-                    class="glass px-8 py-3 rounded-lg font-semibold hover:bg-slate-800/60 transition-all">Me
-                    contacter</a>
-                <a href="assets/Yves_Loic_SOATIANAINA_CV.pdf" target="_blank" rel="noopener"
-                    class="glass px-8 py-3 rounded-lg font-semibold hover:bg-slate-800/60 transition-all flex items-center space-x-2">
-                    <i class="fas fa-file-pdf"></i><span>CV</span>
-                </a>
-            </div>
-            <div class="flex justify-center gap-5 mt-10 text-slate-400">
-                <a href="https://github.com/YvesLoic5" target="_blank" rel="noopener" aria-label="GitHub"
-                    class="hover:text-teal-400 transition-colors"><i class="fab fa-github text-xl"></i></a>
-                <a href="https://linkedin.com/in/yves-loic" target="_blank" rel="noopener" aria-label="LinkedIn"
-                    class="hover:text-teal-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
-                <a href="mailto:yvesloic58@gmail.com" aria-label="Email"
-                    class="hover:text-teal-400 transition-colors"><i class="fas fa-envelope text-xl"></i></a>
-            </div>
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+        <div
+            class="mb-6 px-4 py-1.5 border border-default rounded-full text-xs font-medium uppercase tracking-widest text-muted">
+            Disponible pour de nouvelles opportunités</div>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-3 leading-tight">Yves Loïc SOATIANAINA</h1>
+        <p class="code-font text-base md:text-lg text-muted mb-8">AI Engineer // LLMOps Engineer</p>
+        <p class="text-muted text-base md:text-lg max-w-2xl mb-10 leading-relaxed">Je vous aide à concevoir vos besoins
+            en IA agentique, du prototype à la production — infrastructure Kubernetes, pipelines LLMOps, RAG &amp;
+            observabilité. Full remote depuis Antananarivo.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="#work" class="btn btn-primary">Mes réalisations <i class="fas fa-arrow-right text-xs"></i></a>
+            <a href="#contact" class="btn btn-outline">Me contacter</a>
+            <a href="assets/Yves_Loic_SOATIANAINA_CV.pdf" target="_blank" rel="noopener" class="btn btn-outline"><i
+                    class="fas fa-file-pdf"></i> CV</a>
         </div>
-
-        <!-- floating chips -->
-        <div class="absolute hidden lg:block left-[8%] top-[28%] float-chip">
-            <div class="glass px-4 py-2 rounded-xl code-font text-sm text-teal-300">VLLM</div>
-        </div>
-        <div class="absolute hidden lg:block right-[9%] top-[38%] float-chip">
-            <div class="glass px-4 py-2 rounded-xl code-font text-sm text-indigo-300">Kubernetes</div>
-        </div>
-        <div class="absolute hidden lg:block left-[12%] bottom-[18%] float-chip">
-            <div class="glass px-4 py-2 rounded-xl code-font text-sm text-pink-300">LangGraph</div>
+        <div class="flex justify-center gap-5 mt-10 text-muted">
+            <a href="https://github.com/YvesLoic5" target="_blank" rel="noopener" aria-label="GitHub"
+                class="hover:opacity-60 transition-opacity"><i class="fab fa-github text-lg"></i></a>
+            <a href="https://linkedin.com/in/yves-loic" target="_blank" rel="noopener" aria-label="LinkedIn"
+                class="hover:opacity-60 transition-opacity"><i class="fab fa-linkedin text-lg"></i></a>
+            <a href="mailto:yvesloic58@gmail.com" aria-label="Email" class="hover:opacity-60 transition-opacity"><i
+                    class="fas fa-envelope text-lg"></i></a>
         </div>
     </section>
-
-    <!-- Tech marquee -->
-    <div class="py-6 border-y border-slate-800/60 bg-slate-900/30">
-        <div class="marquee">
-            <div class="marquee-track code-font text-sm text-slate-500 uppercase tracking-widest">
-                <span>Python</span><span>·</span><span>VLLM</span><span>·</span><span>Ollama</span><span>·</span><span>Hugging
-                    Face</span><span>·</span><span>LangChain</span><span>·</span><span>LangGraph</span><span>·</span><span>Kubernetes</span><span>·</span><span>Qdrant</span><span>·</span><span>Milvus</span><span>·</span><span>Pinecone</span><span>·</span><span>FastAPI</span><span>·</span><span>Grafana</span><span>·</span><span>Docker</span><span>·</span>
-                <span>Python</span><span>·</span><span>VLLM</span><span>·</span><span>Ollama</span><span>·</span><span>Hugging
-                    Face</span><span>·</span><span>LangChain</span><span>·</span><span>LangGraph</span><span>·</span><span>Kubernetes</span><span>·</span><span>Qdrant</span><span>·</span><span>Milvus</span><span>·</span><span>Pinecone</span><span>·</span><span>FastAPI</span><span>·</span><span>Grafana</span><span>·</span><span>Docker</span><span>·</span>
+    <section id="work" class="py-24 px-6 bg-surface border-y border-default">
+        <div class="max-w-4xl mx-auto">
+            <div class="reveal mb-10">
+                <p class="code-font text-sm text-muted mb-2">// 01</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-3">Ce que j'ai conçu</h2>
+                <p class="text-muted max-w-2xl">AI &amp; LLMOps Engineer, je collabore avec des plateformes SAAS AI Hub
+                    comme <a href="https://www.swiftask.ai" target="_blank" rel="noopener"
+                        class="font-semibold underline" style="color:var(--fg)">Swiftask</a> et <a
+                        href="https://www.ia-souveraine.fr" target="_blank" rel="noopener"
+                        class="font-semibold underline" style="color:var(--fg)">ia-souveraine</a> — voici un catalogue
+                    de mes réalisations, du quotidien en production aux projets open source.</p>
             </div>
-        </div>
-    </div>
-
-    <!-- RÉALISATIONS — catalogue expertise + projets -->
-    <section id="work" class="relative py-24 px-6 bg-slate-900/30">
-        <div class="max-w-5xl mx-auto">
-            <div class="reveal mb-12">
-                <p class="code-font text-sm text-teal-400 mb-2">// 01</p>
-                <h2 class="text-3xl md:text-5xl font-extrabold">Ce que j'ai <span class="gradient-text">construis</span>
-                </h2>
-                <p class="text-slate-400 mt-4 max-w-2xl text-lg">AI &amp; LLMOps Engineer, je travaille actuellement
-                    <span class="text-teal-300 font-semibold">avec Swiftask</span> et sur le projet
-                    <span class="text-emerald-300 font-semibold">ia-souveraine.fr</span> — voici un catalogue de mes
-                    réalisations, du quotidien en production aux projets open source.
-                </p>
-            </div>
-
             <div class="carousel reveal" id="workCarousel">
-                <button class="carousel-btn prev" aria-label="Précédent"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-btn next" aria-label="Suivant"><i class="fas fa-chevron-right"></i></button>
+                <button class="carousel-btn prev" aria-label="Précédent"><i
+                        class="fas fa-chevron-left text-xs"></i></button>
+                <button class="carousel-btn next" aria-label="Suivant"><i
+                        class="fas fa-chevron-right text-xs"></i></button>
                 <div class="carousel-track">
-
-                    <!-- Slide 1 — Swiftask -->
                     <div class="carousel-slide">
-                        <article class="glow-card overflow-hidden relative">
+                        <article class="card overflow-hidden relative">
                             <span class="slide-num">01 / 05</span>
-                            <div class="h-52 relative flex items-center justify-center"
-                                style="background: linear-gradient(135deg, rgba(45,212,191,.15), rgba(99,102,241,.15)), url('https://res.cloudinary.com/dsht8f3ff/image/upload/v1728308063/logo520x520_f159fp.png') center/contain no-repeat;">
-                                <div class="absolute inset-0 bg-slate-950/40"></div>
+                            <div class="h-48 relative"
+                                style="background:url('https://s3.dri.fr/iasouveraine/files/0106dd5d-e826-4a50-998d-92752d2ea6b7/logo.dde38d15-Lardillet-Matthieu-1-1024x379-1.png') center/contain no-repeat;background-color:var(--surface)">
                             </div>
-                            <div class="p-8 relative">
-                                <div class="flex items-start justify-between mb-5">
-                                    <div
-                                        class="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500/20 to-indigo-500/20 flex items-center justify-center">
-                                        <i class="fas fa-robot text-2xl text-teal-400"></i>
-                                    </div>
-                                    <span class="code-font text-xs text-slate-500">Production · 2024—</span>
-                                </div>
-                                <h3 class="text-xl font-bold mb-1">AI Engineer — Agents IA &amp; pipelines LLMOps</h3>
+                            <div class="p-7">
+                                <div class="flex items-center justify-between mb-4"><span
+                                        class="code-font text-xs text-muted">Production · 2024—</span></div>
+                                <h3 class="text-lg font-bold mb-1">AI Engineer</h3>
                                 <a href="https://www.swiftask.ai" target="_blank" rel="noopener"
-                                    class="text-teal-400 text-sm font-medium hover:text-teal-300 transition-colors">je
-                                    travaille avec Swiftask <i
+                                    class="text-sm font-medium underline">je travaille avec Swiftask <i
                                         class="fas fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>
-                                <ul class="mt-5 space-y-2.5 text-sm text-slate-300">
+                                <p class="text-muted text-sm mt-3 mb-4 leading-relaxed">Au sein de l'équipe Swiftask,
+                                    j'ai contribué à la conception et l'intégration de l'écosystème agentique de la
+                                    plateforme.</p>
+                                <ul class="mt-2 space-y-2 text-sm text-muted">
                                     <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-teal-400/70 text-xs mt-1.5"></i><span>Conception
-                                            &amp; déploiement d'agents IA et d'applications basées LLM</span></li>
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">60+ outils
+                                                agentiques</span> : Odoo CRM, Google Drive Toolkit, MCP Protocol,
+                                            générateurs PDF/DOCX, pipeline OCR </span></li>
                                     <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-teal-400/70 text-xs mt-1.5"></i><span>Pipelines
-                                            LLMOps avec VLLM, Ollama &amp; Hugging Face</span></li>
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">80+ modèles LLM</span> :
+                                            OpenAI GPT, Anthropic Claude, Google Gemini, DeepSeek, xAI Grok, Mistral,
+                                            Llama, Qwen, Ollama</span></li>
                                     <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-teal-400/70 text-xs mt-1.5"></i><span>Bases
-                                            vectorielles (Qdrant) pour recherche sémantique &amp; RAG</span></li>
-                                    <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-teal-400/70 text-xs mt-1.5"></i><span>Workflows
-                                            d'agents complexes avec LangChain &amp; LangGraph</span></li>
-                                    <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-teal-400/70 text-xs mt-1.5"></i><span>Backend
-                                            Python / FastAPI, PostgreSQL, Redis, AMQP</span></li>
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Intégrations MCP</span> :
+                                            Notion, Supabase, Canva, Pipedream</span></li>
                                 </ul>
-                                <div class="flex flex-wrap gap-2 mt-6">
-                                    <span class="tag-pill">LangGraph</span><span class="tag-pill">VLLM</span><span
-                                        class="tag-pill">Qdrant</span><span class="tag-pill">Grafana</span>
-                                </div>
+                                <div class="flex flex-wrap gap-2 mt-5"><span class="tag">LangGraph</span><span
+                                        class="tag">MCP</span><span class="tag">80+ LLMs</span><span class="tag">Agents
+                                        IA</span></div>
                             </div>
                         </article>
                     </div>
-
-                    <!-- Slide 2 — ia-souveraine -->
                     <div class="carousel-slide">
-                        <article class="glow-card overflow-hidden relative">
+                        <article class="card overflow-hidden relative">
                             <span class="slide-num">02 / 05</span>
-                            <div class="h-52 relative flex items-center justify-center"
-                                style="background: linear-gradient(135deg, rgba(16,185,129,.15), rgba(45,212,191,.15)), url('https://static.swiftask.ai/swiftaskagent/75634c23-f6bc-4b3d-a9ae-6c62bf5cdb1d/Feuille.png') center/contain no-repeat;">
-                                <div class="absolute inset-0 bg-slate-950/40"></div>
+                            <div class="h-48 relative"
+                                style="background:url('https://static.swiftask.ai/swiftaskagent/75634c23-f6bc-4b3d-a9ae-6c62bf5cdb1d/Feuille.png') center/contain no-repeat;background-color:var(--surface)">
                             </div>
-                            <div class="p-8 relative">
-                                <div class="flex items-start justify-between mb-5">
-                                    <div
-                                        class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center">
-                                        <i class="fas fa-shield-halved text-2xl text-emerald-400"></i>
-                                    </div>
-                                    <span class="code-font text-xs text-slate-500">Production · 2024—</span>
-                                </div>
-                                <h3 class="text-xl font-bold mb-1">Platform Engineer — Plateforme IA souveraine</h3>
-                                <a href="https://app.ia-souveraine.fr" target="_blank" rel="noopener"
-                                    class="text-emerald-400 text-sm font-medium hover:text-emerald-300 transition-colors">je
-                                    travaille sur ia-souveraine.fr <i
+                            <div class="p-7">
+                                <div class="flex items-center justify-between mb-4"><span
+                                        class="code-font text-xs text-muted">Production · 2024—</span></div>
+                                <h3 class="text-lg font-bold mb-1">Maintainer — IA Souveraine</h3>
+                                <a href="https://www.ia-souveraine.fr" target="_blank" rel="noopener"
+                                    class="text-sm font-medium underline">je travaille sur ia-souveraine.fr <i
                                         class="fas fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>
-                                <ul class="mt-5 space-y-2.5 text-sm text-slate-300">
+                                <p class="text-muted text-sm mt-3 mb-4 leading-relaxed">Plateforme d'IA souveraine
+                                    hébergée en France — white-label de Swiftask qui priorise les IA open source et
+                                    outils hébergés dans leurs serveurs tout en offrant les usages commerciaux de
+                                    Swiftask. J'ai optimisé le déploiement et l'inférence des IA hébergées par DRI pour
+                                    encaisser plus d'usages, et j'assure l'acheminement depuis les IA déployées en
+                                    interne jusqu'à leur liaison avec l'outil agentique de la plateforme — un SAAS AI
+                                    Hub souveraine en France, de l'inférence jusqu'à l'usage agentique des end-users.
+                                </p>
+                                <ul class="mt-2 space-y-2 text-sm text-muted">
                                     <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-emerald-400/70 text-xs mt-1.5"></i><span>Développement
-                                            &amp; maintenance d'une plateforme IA souveraine</span></li>
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Serving de LLMs
+                                                hébergés par DRI</span> : vLLM, Ollama</span></li>
                                     <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-emerald-400/70 text-xs mt-1.5"></i><span>Orchestration
-                                            de services IA conteneurisés avec Kubernetes</span></li>
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Orchestration
+                                                Kubernetes</span> complète &amp; pipelines CI/CD
+                                            multi-environnements</span></li>
                                     <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-emerald-400/70 text-xs mt-1.5"></i><span>Gestion
-                                            de clusters K8s via Lens, Octant &amp; kubectl</span></li>
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Monitoring</span> &amp;
+                                            observabilité de la plateforme</span></li>
                                     <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-emerald-400/70 text-xs mt-1.5"></i><span>Pipelines
-                                            CI/CD pour le déploiement automatisé des modèles</span></li>
-                                    <li class="flex gap-2"><i
-                                            class="fas fa-chevron-right text-emerald-400/70 text-xs mt-1.5"></i><span>Fiabilité,
-                                            scalabilité &amp; observabilité avec Grafana</span></li>
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Intégration &amp;
+                                                catégorisation</span> de modèles souverains</span></li>
                                 </ul>
-                                <div class="flex flex-wrap gap-2 mt-6">
-                                    <span class="tag-pill">Kubernetes</span><span class="tag-pill">CI/CD</span><span
-                                        class="tag-pill">kubectl</span><span class="tag-pill">Grafana</span>
-                                </div>
+                                <div class="flex flex-wrap gap-2 mt-5"><span class="tag">Kubernetes</span><span
+                                        class="tag">vLLM</span><span class="tag">CI/CD</span><span
+                                        class="tag">Souverain</span></div>
                             </div>
                         </article>
                     </div>
-
-                    <!-- Slide 3 — Multimodal RAG Milvus -->
                     <div class="carousel-slide">
-                        <article class="glow-card overflow-hidden relative">
+                        <article class="card overflow-hidden relative">
                             <span class="slide-num">03 / 05</span>
-                            <div class="h-52 relative flex items-center justify-center"
-                                style="background: linear-gradient(135deg, rgba(34,197,94,.15), rgba(6,182,212,.15)), url('https://s3.dri.fr/iasouveraine/files/929f7bf2-8e87-4be3-8a24-ec5980ad3777/multi-modal-rag-featured.jpg') center/cover no-repeat;">
-                                <div class="absolute inset-0 bg-slate-950/40"></div>
+                            <div class="h-48 relative"
+                                style="background:url('https://s3.dri.fr/iasouveraine/files/cb043c8c-92ee-4c7f-8c6c-35ab308a0050/milvus_Logo_ee3ae48b61.png') center/cover no-repeat">
                             </div>
-                            <div class="p-8">
-                                <h3 class="text-xl font-bold mb-3">Multimodal RAG with Milvus</h3>
-                                <p class="text-slate-400 text-sm mb-5 leading-relaxed">Système de Retrieval-Augmented
-                                    Generation multimodal construit sur la base vectorielle Milvus. Indexation et
-                                    recherche sémantique sur des données multimodales pour générer des réponses
-                                    enrichies par le contexte récupéré.</p>
-                                <div class="flex flex-wrap gap-2 mb-6">
-                                    <span class="tag-pill">Milvus</span><span class="tag-pill">RAG</span><span
-                                        class="tag-pill">Multimodal</span><span class="tag-pill">Python</span>
-                                </div>
-                                <a href="https://github.com/YvesLoic5/multimodal-rag-milvus" target="_blank"
-                                    rel="noopener"
-                                    class="text-sm font-semibold flex items-center text-teal-400 hover:text-teal-300 transition-colors">
-                                    Voir le repo <i class="fas fa-arrow-up-right-from-square ml-2 text-xs"></i>
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- Slide 4 — Hugging Face PR -->
-                    <div class="carousel-slide">
-                        <article class="glow-card overflow-hidden relative">
-                            <span class="slide-num">04 / 05</span>
-                            <div class="h-52 relative flex items-center justify-center"
-                                style="background: linear-gradient(135deg, rgba(34,197,94,.15), rgba(6,182,212,.15)), url('https://s3.dri.fr/iasouveraine/files/f31c507d-0848-46a8-947a-3a59cb0c5fe0/hugging-face-logo-png_seeklogo-515009.png') center/contain no-repeat;">
-                                <div class="absolute inset-0 bg-slate-950/40"></div>
-                            </div>
-                            <div class="p-8">
+                            <div class="p-7">
                                 <div class="flex items-center gap-2 mb-3">
-                                    <span
-                                        class="text-[10px] bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded border border-orange-500/30 font-medium">Open
-                                        Source</span>
-                                    <span class="text-[10px] text-slate-500">PR #344</span>
+                                    <span class="tag">Projet solo · de A à Z</span>
                                 </div>
-                                <h3 class="text-xl font-bold mb-3">Strip Markdown before TTS</h3>
-                                <p class="text-slate-400 text-sm mb-5 leading-relaxed">Contribution au dépôt <span
-                                        class="text-slate-300">huggingface/speech-to-speech</span>. Les réponses LLM en
-                                    Markdown sont vocalisées littéralement par le TTS — ce correctif strip la syntaxe
-                                    avant la synthèse vocale pour un rendu naturel.</p>
-                                <div class="flex flex-wrap gap-2 mb-6">
-                                    <span class="tag-pill">Python</span><span class="tag-pill">TTS</span><span
-                                        class="tag-pill">Markdown</span><span class="tag-pill">Open Source</span>
+                                <h3 class="text-lg font-bold mb-3">Multimodal RAG — Production-Grade System</h3>
+                                <p class="text-muted text-sm mb-4 leading-relaxed">Système RAG complet supportant <span
+                                        class="font-semibold" style="color:var(--fg)">texte et images</span>, construit
+                                    de zéro. Pipeline d'ingestion (PDF/PNG/JPG/TXT → PyMuPDF/Pillow → chunks),
+                                    embeddings dual (BGE-M3 dense+sparse pour le texte, CLIP pour les images), stockage
+                                    vectoriel Milvus avec collection hybride (HNSW + SPARSE_INV), et génération LLM avec
+                                    GPT-4o streaming + fallback LLaVA via Ollama.</p>
+                                <div class="space-y-2 text-sm text-muted mb-4">
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Recherche hybride</span> :
+                                            Dense HNSW (cosine) + Sparse BM25, fusion RRF via pymilvus RRFRanker</span>
+                                    </p>
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Reranking</span> :
+                                            Cross-Encoder ms-marco-MiniLM-L-6-v2 (top-20 → top-5)</span></p>
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Cache 2 niveaux</span> :
+                                            Redis — exact (MD5, O(1)) + sémantique (cosine ≥ 0.92)</span></p>
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Évaluation</span> : RAGAS
+                                            (faithfulness, relevancy, recall, precision) sur 20 Q&A</span></p>
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Production</span> : Docker
+                                            Compose, Tenacity retries, singleton models, ingestion idempotente</span>
+                                    </p>
                                 </div>
-                                <a href="https://github.com/huggingface/speech-to-speech/pull/344" target="_blank"
-                                    rel="noopener"
-                                    class="text-sm font-semibold flex items-center text-teal-400 hover:text-teal-300 transition-colors">
-                                    Voir la PR <i class="fas fa-arrow-up-right-from-square ml-2 text-xs"></i>
-                                </a>
+                                <div class="flex flex-wrap gap-2 mb-5"><span class="tag">Milvus</span><span
+                                        class="tag">BGE-M3</span><span class="tag">CLIP</span><span
+                                        class="tag">GPT-4o</span><span class="tag">LLaVA</span><span
+                                        class="tag">Redis</span><span class="tag">LangChain</span><span
+                                        class="tag">Chainlit</span><span class="tag">Docker</span><span
+                                        class="tag">RAGAS</span><span class="tag">Poetry</span><span
+                                        class="tag">PyMuPDF</span></div>
+                                <a href="https://github.com/YvesLoic5/multimodal-rag-milvus" target="_blank"
+                                    rel="noopener" class="text-sm font-semibold underline">Voir le repo <i
+                                        class="fas fa-arrow-up-right-from-square ml-2 text-xs"></i></a>
                             </div>
                         </article>
                     </div>
-
-                    <!-- Slide 5 — University Advisor Llama 2 -->
                     <div class="carousel-slide">
-                        <article class="glow-card overflow-hidden relative">
-                            <span class="slide-num">05 / 05</span>
-                            <div class="h-52 relative flex items-center justify-center"
-                                style="background: linear-gradient(135deg, rgba(99,102,241,.15), rgba(168,85,247,.15)), url('https://s3.dri.fr/iasouveraine/files/f207a073-cdcc-4d1e-a1d4-8b7ed90326c5/llamaimages.jpeg') center/cover no-repeat;">
-                                <div class="absolute inset-0 bg-slate-950/50"></div>
+                        <article class="card overflow-hidden relative">
+                            <span class="slide-num">04 / 05</span>
+                            <div class="h-48 relative"
+                                style="background:url('https://s3.dri.fr/iasouveraine/files/9b78c9a4-253f-4d88-b652-68f45805aa69/speech-to-speech.png') center/contain no-repeat;background-color:var(--surface)">
                             </div>
-                            <div class="p-8">
-                                <h3 class="text-xl font-bold mb-3">University Advisor (Llama 2)</h3>
-                                <p class="text-slate-400 text-sm mb-5 leading-relaxed">Bot d'orientation universitaire
-                                    pour Madagascar, propulsé par Llama 2. En combinant l'IA avec une base exhaustive
-                                    d'institutions, il fournit des recommandations pertinentes et simplifie la recherche
-                                    de l'établissement idéal.</p>
-                                <div class="flex flex-wrap gap-2 mb-6">
-                                    <span class="tag-pill">Llama 2</span><span class="tag-pill">LLM</span><span
-                                        class="tag-pill">Python</span>
-                                </div>
-                                <a href="https://github.com/YvesLoic5/Generative-AI-UniversityMalagasy-Advisor-Using-Llama2"
-                                    target="_blank" rel="noopener"
-                                    class="text-sm font-semibold flex items-center text-teal-400 hover:text-teal-300 transition-colors">
-                                    Voir le repo <i class="fas fa-arrow-up-right-from-square ml-2 text-xs"></i>
-                                </a>
+                            <div class="p-7">
+                                <div class="flex items-center gap-2 mb-3"><span class="tag">Open Source</span><span
+                                        class="code-font text-xs text-muted">PR #344</span></div>
+                                <h3 class="text-lg font-bold mb-3">Strip Markdown before TTS</h3>
+                                <p class="text-muted text-sm mb-4 leading-relaxed">Contribution au dépôt
+                                    huggingface/speech-to-speech. Les réponses LLM en Markdown sont vocalisées
+                                    littéralement par le TTS — ce correctif strip la syntaxe avant la synthèse vocale
+                                    pour un rendu naturel.</p>
+                                <div class="flex flex-wrap gap-2 mb-5"><span class="tag">Python</span><span
+                                        class="tag">TTS</span><span class="tag">Markdown</span><span class="tag">Open
+                                        Source</span></div>
+                                <a href="https://github.com/huggingface/speech-to-speech/pull/344" target="_blank"
+                                    rel="noopener" class="text-sm font-semibold underline">Voir la PR <i
+                                        class="fas fa-arrow-up-right-from-square ml-2 text-xs"></i></a>
                             </div>
                         </article>
                     </div>
-
+                    <div class="carousel-slide">
+                        <article class="card overflow-hidden relative">
+                            <span class="slide-num">05 / 05</span>
+                            <div class="h-48 relative"
+                                style="background:url('https://s3.dri.fr/iasouveraine/files/7c1730e6-e76b-4984-8b72-e5f6034c4462/1721187573343.png') center/cover no-repeat">
+                            </div>
+                            <div class="p-7">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="tag">Projet solo</span>
+                                </div>
+                                <h3 class="text-lg font-bold mb-3">University Advisor (Llama 2)</h3>
+                                <p class="text-muted text-sm mb-4 leading-relaxed">Bot d'orientation universitaire pour
+                                    Madagascar, propulsé par <span class="font-semibold" style="color:var(--fg)">Llama 2
+                                        7B Chat</span> (quantisé GGML q4_0, exécuté en local). Indexation d'une base
+                                    exhaustive d'institutions dans <span class="font-semibold"
+                                        style="color:var(--fg)">Pinecone</span>, retrieval sémantique via <span
+                                        class="font-semibold" style="color:var(--fg)">LangChain</span>, et interface web
+                                    <span class="font-semibold" style="color:var(--fg)">Flask</span>.
+                                </p>
+                                <div class="space-y-2 text-sm text-muted mb-4">
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Modèle local</span> :
+                                            Llama-2-7B-Chat GGML quantisé (q4_0), pas de dépendance cloud</span></p>
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Vector store</span> :
+                                            Pinecone pour l'indexation des établissements</span></p>
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Pipeline</span> :
+                                            store_index.py (indexation) → app.py (serveur Flask + chatbot)</span></p>
+                                    <p class="flex gap-2"><i
+                                            class="fas fa-chevron-right text-xs mt-1.5 opacity-50"></i><span><span
+                                                class="font-semibold" style="color:var(--fg)">Environnement</span> :
+                                            Conda, Python 3.8, déploiement local</span></p>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mb-5"><span class="tag">Llama 2</span><span
+                                        class="tag">Pinecone</span><span class="tag">LangChain</span><span
+                                        class="tag">Flask</span><span class="tag">Python</span><span
+                                        class="tag">Conda</span></div>
+                                <a href="https://github.com/YvesLoic5/Generative-AI-UniversityMalagasy-Advisor-Using-Llama2"
+                                    target="_blank" rel="noopener" class="text-sm font-semibold underline">Voir le repo
+                                    <i class="fas fa-arrow-up-right-from-square ml-2 text-xs"></i></a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
                 <div class="carousel-dots"></div>
             </div>
-
-            <!-- Stats strip -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 reveal">
-                <div class="glow-card p-5 text-center">
-                    <p class="text-3xl font-extrabold gradient-text">2+</p>
-                    <p class="text-xs text-slate-400 mt-1">ans en LLMOps</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10 reveal">
+                <div class="card p-4 text-center">
+                    <p class="text-2xl font-extrabold">2+</p>
+                    <p class="text-xs text-muted mt-1">ans en LLMOps &amp; agent harness</p>
                 </div>
-                <div class="glow-card p-5 text-center">
-                    <p class="text-3xl font-extrabold gradient-text">K8s</p>
-                    <p class="text-xs text-slate-400 mt-1">infra production</p>
+                <div class="card p-4 text-center">
+                    <p class="text-2xl font-extrabold">K8s</p>
+                    <p class="text-xs text-muted mt-1">infra production</p>
                 </div>
-                <div class="glow-card p-5 text-center">
-                    <p class="text-3xl font-extrabold gradient-text">RAG</p>
-                    <p class="text-xs text-slate-400 mt-1">systèmes déployés</p>
+                <div class="card p-4 text-center">
+                    <p class="text-2xl font-extrabold">RAG</p>
+                    <p class="text-xs text-muted mt-1">systèmes déployés</p>
                 </div>
-                <div class="glow-card p-5 text-center">
-                    <p class="text-3xl font-extrabold gradient-text">OSS</p>
-                    <p class="text-xs text-slate-400 mt-1">contributions HF</p>
+                <div class="card p-4 text-center">
+                    <p class="text-2xl font-extrabold">5+</p>
+                    <p class="text-xs text-muted mt-1">projets livrés</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- OUTILS — stack technique par catégorie -->
-    <section id="skills" class="relative py-24 px-6 max-w-6xl mx-auto">
-        <div class="reveal mb-14">
-            <p class="code-font text-sm text-teal-400 mb-2">// 02</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold">Ma <span class="gradient-text">stack</span> technique</h2>
-            <p class="text-slate-400 mt-4 max-w-2xl text-lg">Les outils que j'utilise au quotidien pour construire,
-                déployer et monitorer des systèmes d'IA en production.</p>
+    <section id="skills" class="py-24 px-6 max-w-5xl mx-auto">
+        <div class="reveal mb-12">
+            <p class="code-font text-sm text-muted mb-2">// 02</p>
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-3">Ma stack technique</h2>
+            <p class="text-muted max-w-2xl">Les outils que j'utilise au quotidien pour construire, déployer et monitorer
+                des systèmes d'IA en production.</p>
         </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
-            <!-- LLMs & LLMOps -->
-            <div class="glow-card lift p-7 reveal">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-11 h-11 rounded-lg bg-purple-500/15 flex items-center justify-center"><i
-                            class="fas fa-brain text-xl text-purple-400"></i></div>
-                    <h3 class="font-bold text-lg">LLMs &amp; LLMOps</h3>
+        <div class="grid md:grid-cols-2 gap-5">
+            <div class="card p-6 reveal">
+                <div class="flex items-center gap-3 mb-4"><i class="fas fa-brain text-lg"></i>
+                    <h3 class="font-bold">LLMs &amp; LLMOps</h3>
                 </div>
-                <div class="flex flex-wrap gap-2">
-                    <span class="tag-pill">VLLM</span><span class="tag-pill">Ollama</span><span class="tag-pill">Hugging
-                        Face</span><span class="tag-pill">LangChain</span><span class="tag-pill">LangGraph</span><span
-                        class="tag-pill">Gemma</span><span class="tag-pill">Gemini</span><span class="tag-pill">Llama
-                        2</span>
-                </div>
+                <div class="flex flex-wrap gap-2"><span class="tag">VLLM</span><span class="tag">Ollama</span><span
+                        class="tag">Hugging Face</span><span class="tag">LangChain</span><span
+                        class="tag">LangGraph</span><span class="tag">Gemma</span><span class="tag">Gemini</span><span
+                        class="tag">Llama 2</span></div>
             </div>
-
-            <!-- Agents IA -->
-            <div class="glow-card lift p-7 reveal">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-11 h-11 rounded-lg bg-orange-500/15 flex items-center justify-center"><i
-                            class="fas fa-diagram-project text-xl text-orange-400"></i></div>
-                    <h3 class="font-bold text-lg">Agents IA &amp; Workflows</h3>
+            <div class="card p-6 reveal">
+                <div class="flex items-center gap-3 mb-4"><i class="fas fa-diagram-project text-lg"></i>
+                    <h3 class="font-bold">Agents IA &amp; Workflows</h3>
                 </div>
-                <div class="flex flex-wrap gap-2">
-                    <span class="tag-pill">LangGraph</span><span class="tag-pill">LangChain</span><span
-                        class="tag-pill">RAG</span><span class="tag-pill">ReAct</span><span class="tag-pill">Function
-                        calling</span><span class="tag-pill">Tool use</span>
-                </div>
+                <div class="flex flex-wrap gap-2"><span class="tag">LangGraph</span><span
+                        class="tag">LangChain</span><span class="tag">RAG</span><span class="tag">ReAct</span><span
+                        class="tag">Function calling</span><span class="tag">Tool use</span></div>
             </div>
-
-            <!-- Vector DBs -->
-            <div class="glow-card lift p-7 reveal">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-11 h-11 rounded-lg bg-green-500/15 flex items-center justify-center"><i
-                            class="fas fa-database text-xl text-green-400"></i></div>
-                    <h3 class="font-bold text-lg">Bases vectorielles &amp; RAG</h3>
+            <div class="card p-6 reveal">
+                <div class="flex items-center gap-3 mb-4"><i class="fas fa-database text-lg"></i>
+                    <h3 class="font-bold">Bases vectorielles &amp; RAG</h3>
                 </div>
-                <div class="flex flex-wrap gap-2">
-                    <span class="tag-pill">Qdrant</span><span class="tag-pill">Milvus</span><span
-                        class="tag-pill">Pinecone</span><span class="tag-pill">Neo4j / Cypher</span><span
-                        class="tag-pill">Embeddings</span>
-                </div>
+                <div class="flex flex-wrap gap-2"><span class="tag">Qdrant</span><span class="tag">Milvus</span><span
+                        class="tag">Pinecone</span><span class="tag">Neo4j / Cypher</span><span
+                        class="tag">Embeddings</span></div>
             </div>
-
-            <!-- Infra & DevOps -->
-            <div class="glow-card lift p-7 reveal">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-11 h-11 rounded-lg bg-blue-500/15 flex items-center justify-center"><i
-                            class="fab fa-docker text-xl text-blue-400"></i></div>
-                    <h3 class="font-bold text-lg">Infrastructure &amp; DevOps</h3>
+            <div class="card p-6 reveal">
+                <div class="flex items-center gap-3 mb-4"><i class="fab fa-docker text-lg"></i>
+                    <h3 class="font-bold">Infrastructure &amp; DevOps</h3>
                 </div>
-                <div class="flex flex-wrap gap-2">
-                    <span class="tag-pill">Kubernetes</span><span class="tag-pill">Docker</span><span
-                        class="tag-pill">kubectl</span><span class="tag-pill">Lens</span><span
-                        class="tag-pill">Octant</span><span class="tag-pill">GitHub Actions</span><span
-                        class="tag-pill">CI/CD</span><span class="tag-pill">Grafana</span><span
-                        class="tag-pill">DVC</span><span class="tag-pill">MLflow</span>
-                </div>
+                <div class="flex flex-wrap gap-2"><span class="tag">Kubernetes</span><span
+                        class="tag">Docker</span><span class="tag">kubectl</span><span class="tag">Lens</span><span
+                        class="tag">Octant</span><span class="tag">GitHub Actions</span><span
+                        class="tag">CI/CD</span><span class="tag">Grafana</span><span class="tag">DVC</span><span
+                        class="tag">MLflow</span></div>
             </div>
-
-            <!-- Backend & Data -->
-            <div class="glow-card lift p-7 reveal">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-11 h-11 rounded-lg bg-cyan-500/15 flex items-center justify-center"><i
-                            class="fas fa-bolt text-xl text-cyan-400"></i></div>
-                    <h3 class="font-bold text-lg">Backend &amp; Bases de données</h3>
+            <div class="card p-6 reveal">
+                <div class="flex items-center gap-3 mb-4"><i class="fas fa-bolt text-lg"></i>
+                    <h3 class="font-bold">Backend &amp; Bases de données</h3>
                 </div>
-                <div class="flex flex-wrap gap-2">
-                    <span class="tag-pill">Python</span><span class="tag-pill">FastAPI</span><span
-                        class="tag-pill">Flask</span><span class="tag-pill">Uvicorn</span><span
-                        class="tag-pill">TypeScript</span><span class="tag-pill">PostgreSQL</span><span
-                        class="tag-pill">Redis</span><span class="tag-pill">AMQP</span><span class="tag-pill">SQL</span>
-                </div>
+                <div class="flex flex-wrap gap-2"><span class="tag">Python</span><span class="tag">FastAPI</span><span
+                        class="tag">Flask</span><span class="tag">Uvicorn</span><span class="tag">TypeScript</span><span
+                        class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">AMQP</span><span
+                        class="tag">SQL</span></div>
             </div>
-
-            <!-- Data Science & Outils -->
-            <div class="glow-card lift p-7 reveal">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-11 h-11 rounded-lg bg-pink-500/15 flex items-center justify-center"><i
-                            class="fas fa-chart-line text-xl text-pink-400"></i></div>
-                    <h3 class="font-bold text-lg">Data Science &amp; Outils</h3>
+            <div class="card p-6 reveal">
+                <div class="flex items-center gap-3 mb-4"><i class="fas fa-chart-line text-lg"></i>
+                    <h3 class="font-bold">Data Science &amp; Outils</h3>
                 </div>
-                <div class="flex flex-wrap gap-2">
-                    <span class="tag-pill">Pandas</span><span class="tag-pill">NumPy</span><span
-                        class="tag-pill">SciPy</span><span class="tag-pill">Scikit-learn</span><span
-                        class="tag-pill">Seaborn</span><span class="tag-pill">Matplotlib</span><span
-                        class="tag-pill">Streamlit</span><span class="tag-pill">Jupyter</span><span
-                        class="tag-pill">Git/GitHub</span><span class="tag-pill">Java</span>
+                <div class="flex flex-wrap gap-2"><span class="tag">Pandas</span><span class="tag">NumPy</span><span
+                        class="tag">SciPy</span><span class="tag">Scikit-learn</span><span
+                        class="tag">Seaborn</span><span class="tag">Matplotlib</span><span
+                        class="tag">Streamlit</span><span class="tag">Jupyter</span><span
+                        class="tag">Git/GitHub</span><span class="tag">Java</span></div>
+            </div>
+        </div>
+    </section>
+    <section id="awards" class="py-24 px-6 bg-surface border-y border-default">
+        <div class="max-w-5xl mx-auto">
+            <div class="reveal mb-12">
+                <p class="code-font text-sm text-muted mb-2">// 03</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold">Distinctions &amp; parlé</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-5">
+                <div class="card p-5 reveal"><i class="fas fa-medal text-xl mb-3"></i>
+                    <h3 class="font-semibold mb-1">Médaille d'argent</h3>
+                    <p class="text-xs text-muted">International Youth Math Challenge 2024</p>
+                </div>
+                <div class="card p-5 reveal"><i class="fas fa-globe text-xl mb-3"></i>
+                    <h3 class="font-semibold mb-1">Ambassadeur Madagascar</h3>
+                    <p class="text-xs text-muted">International Computer Science Competition</p>
+                </div>
+                <div class="card p-5 reveal"><i class="fas fa-microphone text-xl mb-3"></i>
+                    <h3 class="font-semibold mb-1">Intervenant Google I/O 2024</h3>
+                    <p class="text-xs text-muted">Talk sur les nouveautés de Gemini</p>
+                </div>
+                <div class="card p-5 reveal"><i class="fas fa-graduation-cap text-xl mb-3"></i>
+                    <h3 class="font-semibold mb-1">Master Big Data &amp; IA</h3>
+                    <p class="text-xs text-muted">BIG DATA ET INTELLIGENCE ARTIFICIELLE</p>
+                </div>
+                <div class="card p-5 reveal"><i class="fas fa-pen-nib text-xl mb-3"></i>
+                    <h3 class="font-semibold mb-1">Articles techniques</h3>
+                    <p class="text-xs text-muted">Medium &amp; LinkedIn</p>
+                </div>
+                <div class="card p-5 reveal"><i class="fas fa-users text-xl mb-3"></i>
+                    <h3 class="font-semibold mb-1">GDG Antananarivo</h3>
+                    <p class="text-xs text-muted">Organisation du DevFest 2024</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- DISTINCTIONS -->
-    <section id="awards" class="relative py-24 px-6 max-w-5xl mx-auto">
-        <div class="reveal mb-14">
-            <p class="code-font text-sm text-teal-400 mb-2">// 03</p>
-            <h2 class="text-3xl md:text-4xl font-bold"><span class="gradient-text-2">Distinctions</span> &amp; parlé
-            </h2>
-        </div>
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="glow-card lift p-6 reveal">
-                <i class="fas fa-medal text-2xl text-yellow-400 mb-3"></i>
-                <h3 class="font-semibold mb-1">Médaille d'argent</h3>
-                <p class="text-xs text-slate-400">International Youth Math Challenge 2024</p>
-            </div>
-            <div class="glow-card lift p-6 reveal">
-                <i class="fas fa-globe text-2xl text-emerald-400 mb-3"></i>
-                <h3 class="font-semibold mb-1">Ambassadeur Madagascar</h3>
-                <p class="text-xs text-slate-400">International Computer Science Competition</p>
-            </div>
-            <div class="glow-card lift p-6 reveal">
-                <i class="fas fa-microphone text-2xl text-teal-400 mb-3"></i>
-                <h3 class="font-semibold mb-1">Intervenant Google I/O 2024</h3>
-                <p class="text-xs text-slate-400">Talk sur les nouveautés de Gemini</p>
-            </div>
-            <div class="glow-card lift p-6 reveal">
-                <i class="fas fa-trophy text-2xl text-orange-400 mb-3"></i>
-                <h3 class="font-semibold mb-1">Major de promotion</h3>
-                <p class="text-xs text-slate-400">Informatique &amp; Comptabilité/Finance</p>
-            </div>
-            <div class="glow-card lift p-6 reveal">
-                <i class="fas fa-pen-nib text-2xl text-indigo-400 mb-3"></i>
-                <h3 class="font-semibold mb-1">Articles techniques</h3>
-                <p class="text-xs text-slate-400">Medium &amp; LinkedIn</p>
-            </div>
-            <div class="glow-card lift p-6 reveal">
-                <i class="fas fa-users text-2xl text-pink-400 mb-3"></i>
-                <h3 class="font-semibold mb-1">GDG Antananarivo</h3>
-                <p class="text-xs text-slate-400">Organisation du DevFest 2024</p>
-            </div>
+    <section id="contact" class="py-24 px-6 max-w-3xl mx-auto text-center reveal">
+        <p class="code-font text-sm text-muted mb-2">// 04</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Travaillons ensemble</h2>
+        <p class="text-muted mb-8 max-w-xl mx-auto">Ouvert aux missions freelance, collaborations et échanges techniques
+            autour de l'IA, du LLMOps et de l'infrastructure.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="mailto:yvesloic58@gmail.com" class="btn btn-primary"><i class="fas fa-envelope"></i>
+                yvesloic58@gmail.com</a>
+            <a href="https://github.com/YvesLoic5" target="_blank" rel="noopener" class="btn btn-outline"><i
+                    class="fab fa-github"></i> GitHub</a>
+            <a href="https://linkedin.com/in/yves-loic" target="_blank" rel="noopener" class="btn btn-outline"><i
+                    class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://wa.me/261329264306" target="_blank" rel="noopener" class="btn btn-outline"><i
+                    class="fab fa-whatsapp"></i> +261 32 92 643 06</a>
+            <a href="assets/Yves_Loic_SOATIANAINA_CV.pdf" target="_blank" rel="noopener" class="btn btn-outline"><i
+                    class="fas fa-file-pdf"></i> CV</a>
         </div>
     </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="relative py-24 px-6 bg-slate-900/30">
-        <div class="max-w-3xl mx-auto text-center reveal">
-            <p class="code-font text-sm text-teal-400 mb-2">// 04</p>
-            <h2 class="text-3xl md:text-4xl font-bold mb-5">Travaillons <span class="gradient-text">ensemble</span></h2>
-            <p class="text-slate-400 mb-10 max-w-xl mx-auto">
-                Ouvert aux missions freelance, collaborations et échanges techniques autour de l'IA, du LLMOps et de
-                l'infrastructure.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="mailto:yvesloic58@gmail.com"
-                    class="btn-primary px-8 py-3 rounded-lg font-bold transition-all flex items-center space-x-2">
-                    <i class="fas fa-envelope"></i><span>yvesloic58@gmail.com</span>
-                </a>
-                <a href="https://github.com/YvesLoic5" target="_blank" rel="noopener"
-                    class="glass px-8 py-3 rounded-lg font-semibold hover:bg-slate-800/60 transition-all flex items-center space-x-2">
-                    <i class="fab fa-github"></i><span>GitHub</span>
-                </a>
-                <a href="https://linkedin.com/in/yves-loic" target="_blank" rel="noopener"
-                    class="glass px-8 py-3 rounded-lg font-semibold hover:bg-slate-800/60 transition-all flex items-center space-x-2">
-                    <i class="fab fa-linkedin"></i><span>LinkedIn</span>
-                </a>
-                <a href="assets/Yves_Loic_SOATIANAINA_CV.pdf" target="_blank" rel="noopener"
-                    class="glass px-8 py-3 rounded-lg font-semibold hover:bg-slate-800/60 transition-all flex items-center space-x-2">
-                    <i class="fas fa-file-pdf"></i><span>CV</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-8 px-6 text-center text-slate-500 text-sm border-t border-slate-800/60">
+    <footer class="py-8 px-6 text-center text-muted text-sm border-t border-default">
         <p>&copy; <span id="year"></span> Yves Loïc Soatianaina — AI &amp; LLMOps Engineer</p>
     </footer>
-
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
-
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        themeBtn.addEventListener('click', () => { const dark = document.documentElement.getAttribute('data-theme') === 'dark'; if (dark) { document.documentElement.removeAttribute('data-theme'); themeIcon.className = 'fas fa-moon text-sm' } else { document.documentElement.setAttribute('data-theme', 'dark'); themeIcon.className = 'fas fa-sun text-sm' } });
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-
         const revealEls = document.querySelectorAll('.reveal');
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-            });
-        }, { threshold: 0.12 });
+        const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }) }, { threshold: 0.12 });
         revealEls.forEach(el => io.observe(el));
-
-        // ---------- carrousel réalisations ----------
-        (function carousel() {
-            const root = document.getElementById('workCarousel');
-            if (!root) return;
-            const track = root.querySelector('.carousel-track');
-            const slides = root.querySelectorAll('.carousel-slide');
-            const prev = root.querySelector('.carousel-btn.prev');
-            const next = root.querySelector('.carousel-btn.next');
-            const dotsWrap = root.querySelector('.carousel-dots');
-            let idx = 0;
-            const total = slides.length;
-
-            for (let i = 0; i < total; i++) {
-                const d = document.createElement('button');
-                d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-                d.setAttribute('aria-label', 'Slide ' + (i + 1));
-                d.addEventListener('click', () => go(i));
-                dotsWrap.appendChild(d);
-            }
-            const dots = dotsWrap.querySelectorAll('.carousel-dot');
-
-            function go(n) {
-                idx = (n + total) % total;
-                track.style.transform = `translateX(-${idx * 100}%)`;
-                dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-            }
-            prev.addEventListener('click', () => go(idx - 1));
-            next.addEventListener('click', () => go(idx + 1));
-
-            root.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') go(idx - 1);
-                if (e.key === 'ArrowRight') go(idx + 1);
-            });
-            let sx = null;
-            root.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
-            root.addEventListener('touchend', (e) => {
-                if (sx === null) return;
-                const dx = e.changedTouches[0].clientX - sx;
-                if (Math.abs(dx) > 50) go(dx < 0 ? idx + 1 : idx - 1);
-                sx = null;
-            });
-
-            let timer = setInterval(() => go(idx + 1), 6000);
-            root.addEventListener('mouseenter', () => clearInterval(timer));
-            root.addEventListener('mouseleave', () => { timer = setInterval(() => go(idx + 1), 6000); });
-        })();
+        (function carousel() { const root = document.getElementById('workCarousel'); if (!root) return; const track = root.querySelector('.carousel-track'); const slides = root.querySelectorAll('.carousel-slide'); const prev = root.querySelector('.carousel-btn.prev'); const next = root.querySelector('.carousel-btn.next'); const dotsWrap = root.querySelector('.carousel-dots'); let idx = 0; const total = slides.length; for (let i = 0; i < total; i++) { const d = document.createElement('button'); d.className = 'carousel-dot' + (i === 0 ? ' active' : ''); d.setAttribute('aria-label', 'Slide ' + (i + 1)); d.addEventListener('click', () => go(i)); dotsWrap.appendChild(d) } const dots = dotsWrap.querySelectorAll('.carousel-dot'); function go(n) { idx = (n + total) % total; track.style.transform = `translateX(-${idx * 100}%)`; dots.forEach((d, i) => d.classList.toggle('active', i === idx)) } prev.addEventListener('click', () => go(idx - 1)); next.addEventListener('click', () => go(idx + 1)); root.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') go(idx - 1); if (e.key === 'ArrowRight') go(idx + 1) }); let sx = null; root.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX }, { passive: true }); root.addEventListener('touchend', (e) => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) go(dx < 0 ? idx + 1 : idx - 1); sx = null }); let timer = setInterval(() => go(idx + 1), 6000); root.addEventListener('mouseenter', () => clearInterval(timer)); root.addEventListener('mouseleave', () => { timer = setInterval(() => go(idx + 1), 6000) }) })();
     </script>
 </body>
 
