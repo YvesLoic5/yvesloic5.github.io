@@ -1,0 +1,14 @@
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Outils locaux (métadonnées d'assistant, non liées au site)
+.swiftask/
+.claude/
+
+# Fichiers temporaires
+*.log
+*.tmp
+preview*.html

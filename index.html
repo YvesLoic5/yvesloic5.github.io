@@ -7,7 +7,23 @@
     <title>Yves Loïc SOATIANAINA — AI &amp; LLMOps Engineer</title>
     <meta name="description" content="Portfolio de Yves Loïc SOATIANAINA, AI & LLMOps Engineer : agents IA, RAG, serving de LLMs et infrastructure Kubernetes.">
     <meta name="theme-color" content="#070b14">
-    <link rel="icon" type="image/png" href="assets/img/linuxlogoimages.png">
+    <meta name="author" content="Yves Loïc SOATIANAINA">
+    <link rel="canonical" href="https://yvesloic5.github.io/">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Yves Loïc SOATIANAINA">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:title" content="Yves Loïc SOATIANAINA — AI &amp; LLMOps Engineer">
+    <meta property="og:description" content="Agents IA, RAG, serving de LLMs et infrastructure Kubernetes — du prototype à la production.">
+    <meta property="og:url" content="https://yvesloic5.github.io/">
+    <meta property="og:image" content="https://yvesloic5.github.io/assets/img/loic.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Yves Loïc SOATIANAINA — AI &amp; LLMOps Engineer">
+    <meta name="twitter:description" content="Agents IA, RAG, serving de LLMs et infrastructure Kubernetes — du prototype à la production.">
+    <meta name="twitter:image" content="https://yvesloic5.github.io/assets/img/loic.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -358,26 +374,6 @@
             border-bottom: 1px solid var(--line)
         }
 
-        .cover-art {
-            position: absolute;
-            inset: 0;
-            transition: transform .6s cubic-bezier(.2, .8, .2, 1)
-        }
-
-        .project:hover .cover-art {
-            transform: scale(1.07)
-        }
-
-        .cover-art::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .06) 1px, transparent 1px);
-            background-size: 24px 24px;
-            mask-image: linear-gradient(to bottom, #000, transparent);
-            -webkit-mask-image: linear-gradient(to bottom, #000, transparent)
-        }
-
         .cover-img {
             position: absolute;
             inset: 0;
@@ -420,43 +416,6 @@
         .cover.has-img .chip {
             top: auto;
             bottom: 12px
-        }
-
-        .cover-icon {
-            position: absolute;
-            right: 22px;
-            bottom: 18px;
-            font-size: 64px;
-            color: rgba(255, 255, 255, .14)
-        }
-
-        .cover-label {
-            position: absolute;
-            left: 20px;
-            bottom: 16px;
-            font-family: 'Fira Code', monospace;
-            font-size: 12px;
-            color: rgba(226, 232, 240, .75)
-        }
-
-        .art-swiftask {
-            background: radial-gradient(circle at 20% 20%, #0ea5e9 0%, transparent 55%), radial-gradient(circle at 85% 80%, #6366f1 0%, transparent 55%), #0b1224
-        }
-
-        .art-souverain {
-            background: radial-gradient(circle at 80% 20%, #f43f5e 0%, transparent 50%), radial-gradient(circle at 15% 85%, #3b82f6 0%, transparent 55%), #0f1020
-        }
-
-        .art-rag {
-            background: radial-gradient(circle at 25% 30%, #06b6d4 0%, transparent 50%), radial-gradient(circle at 80% 75%, #10b981 0%, transparent 50%), #07141a
-        }
-
-        .art-tts {
-            background: radial-gradient(circle at 75% 25%, #f59e0b 0%, transparent 50%), radial-gradient(circle at 20% 80%, #ec4899 0%, transparent 55%), #160d18
-        }
-
-        .art-llama {
-            background: radial-gradient(circle at 20% 25%, #8b5cf6 0%, transparent 50%), radial-gradient(circle at 85% 80%, #22d3ee 0%, transparent 50%), #0e0b1f
         }
 
         .hl {
