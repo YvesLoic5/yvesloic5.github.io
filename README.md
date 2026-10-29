@@ -8,10 +8,12 @@ Portfolio personnel d'**AI & LLMOps Engineer** : agents IA, RAG, serving de LLMs
 
 ## Ce que contient le site
 
-- **Accueil** — une scène animée qui raconte mon métier en 5 étapes, sans rien lire : un client à bout, son besoin, je fabrique son robot, je le lui livre, il gagne.
+- **Accueil** — ce que je fais en une phrase, les logos des plateformes où je suis en production, et une scène animée qui raconte mon métier en 5 étapes : un client à bout, son besoin, je fabrique son robot, je le lui livre, il gagne.
+- **Services** — agents IA, RAG, LLM serving & IA souveraine, LLMOps.
 - **Réalisations** — projets en production (Swiftask, IA Souveraine), projets personnels (RAG multimodal, University Advisor) et contribution open source (huggingface/speech-to-speech), avec filtres.
+- **Méthode** — cadrage, prototype, production, suivi.
 - **Stack** — outils utilisés au quotidien (LLMs, agents, bases vectorielles, DevOps, backend, data).
-- **Distinctions** et **contact**.
+- **Distinctions** (dont Kaggle Contributor) et **contact**.
 - **Bilingue FR / EN** (français par défaut, choix mémorisé dans le navigateur).
 
 ## Technique
@@ -20,7 +22,7 @@ Site statique, sans étape de build :
 
 | | |
 |---|---|
-| Structure / logique | HTML + JavaScript vanilla, un seul fichier [`index.html`](index.html) |
+| Structure / logique | HTML + JavaScript vanilla, sans framework |
 | Style | [Tailwind CSS](https://tailwindcss.com) (CDN) + CSS maison (effet « glass », animations) |
 | Icônes | [Font Awesome](https://fontawesome.com) 6 |
 | Polices | Inter et Fira Code (Google Fonts) |
@@ -42,16 +44,24 @@ python3 -m http.server 8000
 
 ```
 .
-├── index.html          # page unique (HTML, CSS, JS)
+├── index.html          # contenu de la page (sections + scène SVG)
+├── css/
+│   ├── base.css        # variables, fond, boutons, nav, apparition au scroll
+│   ├── components.css  # cartes projets, services, méthode, logos
+│   └── story.css       # animation de la scène du hero
+├── js/
+│   ├── main.js         # menu, filtres, effet machine à écrire, copie email
+│   ├── story.js        # enchaînement des 5 actes de la scène
+│   └── i18n.js         # traduction FR → EN
 └── assets/
     ├── favicon.svg     # icône du site (+ PNG de secours)
     ├── Yves_Loic_SOATIANAINA_CV.pdf
-    └── img/            # photo et visuels des projets
+    └── img/            # photo, visuels des projets et logos/
 ```
 
 ## Modifier les textes / la traduction
 
-Le français est écrit directement dans le HTML. La version anglaise est dans l'objet `EN` (et `EN_ATTR` pour les attributs) en bas de `index.html` : chaque entrée associe un texte français à sa traduction. Un texte absent du dictionnaire reste en français.
+Le français est écrit directement dans le HTML. La version anglaise est dans l'objet `EN` (et `EN_ATTR` pour les attributs) de [`js/i18n.js`](js/i18n.js) : chaque entrée associe un texte français à sa traduction. Un texte absent du dictionnaire reste en français.
 
 ## Crédits
 
@@ -61,4 +71,5 @@ Les logos et visuels de projets (Swiftask, IA Souveraine, Llama, Hugging Face, M
 
 - GitHub : [@YvesLoic5](https://github.com/YvesLoic5)
 - LinkedIn : [yves-loic](https://linkedin.com/in/yves-loic)
+- Kaggle : [loicyves](https://www.kaggle.com/loicyves)
 - Email : yvesloic58@gmail.com

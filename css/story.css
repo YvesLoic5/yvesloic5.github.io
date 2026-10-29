@@ -1,0 +1,607 @@
+/* ---------- Story ---------- */
+.story svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: 'Inter', sans-serif
+}
+
+.story .bub text {
+    font-size: 15px;
+    font-weight: 500;
+    fill: #e2e8f0;
+    text-anchor: middle
+}
+
+.story .bub rect,
+.story .bub path {
+    fill: rgba(11, 18, 36, .94);
+    stroke: rgba(148, 163, 184, .35);
+    stroke-width: 1
+}
+
+.story .bub path {
+    stroke: none
+}
+
+.story .bub text.bub-h {
+    font-weight: 700;
+    fill: #7dd3fc
+}
+
+.story .bub {
+    opacity: 0;
+    transition: opacity .4s ease
+}
+
+.story[data-act="1"] .b1 {
+    opacity: 1;
+    transition-delay: 1.9s
+}
+
+.story[data-act="2"] .b2 {
+    opacity: 1;
+    transition-delay: .3s
+}
+
+.story[data-act="2"] .b3 {
+    opacity: 1;
+    transition-delay: 3.2s
+}
+
+.story[data-act="3"] .b4 {
+    opacity: 1;
+    transition-delay: .3s
+}
+
+.story[data-act="4"] .b5 {
+    opacity: 1;
+    transition-delay: .5s
+}
+
+.story[data-act="4"] .b6 {
+    opacity: 1;
+    transition-delay: 1.8s
+}
+
+.story[data-act="5"] .b7 {
+    opacity: 1;
+    transition-delay: 3.4s
+}
+
+.star {
+    animation: twinkle 3s ease-in-out infinite
+}
+
+@keyframes twinkle {
+    50% {
+        opacity: .2
+    }
+}
+
+/* Client */
+.cl {
+    transform: translate(-110px, 340px);
+    transition: transform 1.8s cubic-bezier(.2, .8, .2, 1)
+}
+
+.story:is([data-act="1"], [data-act="2"], [data-act="3"], [data-act="4"]) .cl {
+    transform: translate(175px, 340px)
+}
+
+.story[data-act="5"] .cl {
+    transform: translate(130px, 300px);
+    transition-duration: 1s
+}
+
+.cl-fx {
+    filter: saturate(.45) brightness(.85);
+    transition: filter 1s ease
+}
+
+.story:is([data-act="4"], [data-act="5"]) .cl-fx {
+    filter: none
+}
+
+.story[data-act="1"] .cl-bob {
+    animation: walk .45s ease-in-out 4
+}
+
+@keyframes walk {
+    50% {
+        transform: translateY(-5px)
+    }
+}
+
+.cl-upper {
+    --slump: 8deg;
+    transform: translate(0px, -50px) rotate(var(--slump)) translate(0px, 50px);
+    transition: transform .8s ease
+}
+
+.story:is([data-act="4"], [data-act="5"]) .cl-upper {
+    --slump: 0deg
+}
+
+.c-armL {
+    transform: translate(-24px, -120px) rotate(6deg);
+    transition: transform .8s ease
+}
+
+.c-armR {
+    transform: translate(24px, -120px) rotate(-6deg);
+    transition: transform .8s ease
+}
+
+.story[data-act="4"] .c-armL {
+    transform: translate(-24px, -120px) rotate(40deg);
+    transition-delay: 1.6s
+}
+
+.story[data-act="4"] .c-armR {
+    transform: translate(24px, -120px) rotate(-40deg);
+    transition-delay: 1.6s
+}
+
+.story[data-act="5"] .c-armL {
+    transform: translate(-24px, -120px) rotate(150deg)
+}
+
+.story[data-act="5"] .c-armR {
+    transform: translate(24px, -120px) rotate(-150deg)
+}
+
+.f-happy,
+.crown {
+    opacity: 0;
+    transition: opacity .4s ease, transform .5s cubic-bezier(.2, .9, .3, 1.4)
+}
+
+.crown {
+    transform: translateY(-30px)
+}
+
+.f-tired {
+    transition: opacity .4s ease
+}
+
+.story:is([data-act="4"], [data-act="5"]) .f-happy {
+    opacity: 1;
+    transition-delay: .3s
+}
+
+.story:is([data-act="4"], [data-act="5"]) .f-tired {
+    opacity: 0
+}
+
+.story[data-act="5"] .crown {
+    opacity: 1;
+    transform: none;
+    transition-delay: 3.2s
+}
+
+.aura {
+    transition: opacity .8s ease
+}
+
+.aura-sad {
+    opacity: .9
+}
+
+.aura-gold {
+    opacity: 0
+}
+
+.story:is([data-act="4"], [data-act="5"]) .aura-sad {
+    opacity: 0
+}
+
+.story[data-act="5"] .aura-gold {
+    opacity: 1
+}
+
+.sweats {
+    opacity: 0;
+    transition: opacity .5s ease
+}
+
+.story:is([data-act="1"], [data-act="2"], [data-act="3"]) .sweats {
+    opacity: 1
+}
+
+.sweat {
+    animation: drip 1.6s ease-in infinite
+}
+
+@keyframes drip {
+    0% {
+        transform: translateY(-6px);
+        opacity: 0
+    }
+
+    30% {
+        opacity: 1
+    }
+
+    100% {
+        transform: translateY(26px);
+        opacity: 0
+    }
+}
+
+/* Moi */
+.me {
+    transform: translate(470px, 340px);
+    transition: transform 1.2s cubic-bezier(.2, .8, .2, 1)
+}
+
+.story[data-act="5"] .me {
+    transform: translate(548px, 178px) scale(.55)
+}
+
+.me-bob,
+.rb-bob {
+    animation: bob 2.8s ease-in-out infinite
+}
+
+@keyframes bob {
+    50% {
+        transform: translateY(-3px)
+    }
+}
+
+.m-armL {
+    transform: translate(-34px, -118px) rotate(0deg);
+    transition: transform .6s ease
+}
+
+.m-armR {
+    transform: translate(34px, -118px) rotate(0deg);
+    transition: transform .6s ease
+}
+
+.story[data-act="3"] .m-armL {
+    transform: translate(-34px, -118px) rotate(80deg)
+}
+
+.story[data-act="4"] .m-armR {
+    transform: translate(34px, -118px) rotate(-130deg);
+    animation: wave .6s ease-in-out .7s infinite alternate
+}
+
+@keyframes wave {
+    to {
+        transform: translate(34px, -118px) rotate(-155deg)
+    }
+}
+
+.wrench {
+    opacity: 0;
+    transition: opacity .4s ease
+}
+
+.story[data-act="3"] .wrench {
+    opacity: 1;
+    animation: hammer .35s ease-in-out infinite alternate
+}
+
+@keyframes hammer {
+    to {
+        transform: rotate(-18deg)
+    }
+}
+
+/* Établi */
+.bench {
+    opacity: 0;
+    transition: opacity .5s ease
+}
+
+.story[data-act="3"] .bench {
+    opacity: 1
+}
+
+/* Robot */
+.rb {
+    transform: translate(305px, 310px);
+    transition: transform 1.2s cubic-bezier(.2, .8, .2, 1)
+}
+
+.story[data-act="4"] .rb {
+    transform: translate(250px, 340px);
+    transition-delay: .9s
+}
+
+.story[data-act="5"] .rb {
+    transform: translate(330px, 340px)
+}
+
+.part {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(.4);
+    transition: transform .7s cubic-bezier(.2, .9, .3, 1.3), opacity .4s ease
+}
+
+.story:is([data-act="3"], [data-act="4"], [data-act="5"]) .part {
+    opacity: 1;
+    transform: none;
+    transition-delay: var(--d)
+}
+
+.r-armL {
+    transform: translate(-24px, -76px) rotate(0deg);
+    transition: transform .5s ease
+}
+
+.r-armR {
+    transform: translate(24px, -76px) rotate(0deg);
+    transition: transform .5s ease
+}
+
+.story[data-act="4"] .r-armL {
+    transform: translate(-24px, -76px) rotate(140deg);
+    transition-delay: 1.4s
+}
+
+.story[data-act="5"] .r-armR {
+    transform: translate(24px, -76px) rotate(-90deg);
+    transition-delay: .6s
+}
+
+.eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: eye-blink 4s infinite
+}
+
+@keyframes eye-blink {
+
+    0%,
+    94%,
+    100% {
+        transform: scaleY(1)
+    }
+
+    97% {
+        transform: scaleY(.1)
+    }
+}
+
+.pulse {
+    animation: pulse 1.2s ease-in-out infinite
+}
+
+@keyframes pulse {
+    50% {
+        opacity: .35
+    }
+}
+
+.spark {
+    opacity: 0
+}
+
+.story[data-act="3"] .spark {
+    animation: spark .5s linear infinite
+}
+
+@keyframes spark {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1)
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(8px, -14px) scale(.2)
+    }
+}
+
+.otag {
+    opacity: 0;
+    transition: opacity .5s ease
+}
+
+.story[data-act="3"] .otag {
+    opacity: 1;
+    transition-delay: 2.2s
+}
+
+/* Podium */
+.podium {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .6s ease, transform .8s cubic-bezier(.2, .8, .2, 1)
+}
+
+.story[data-act="5"] .podium {
+    opacity: 1;
+    transform: none
+}
+
+/* Adversaires */
+.en {
+    opacity: 0;
+    transition: opacity .8s ease .2s
+}
+
+.story[data-act="5"] .en {
+    opacity: 1
+}
+
+.en-bob {
+    animation: bob 1.6s ease-in-out infinite
+}
+
+.en-in {
+    transform-box: fill-box;
+    transform-origin: center
+}
+
+.story[data-act="5"] .e1 {
+    animation: pop .5s ease-in 1.8s forwards
+}
+
+.story[data-act="5"] .e2 {
+    animation: pop .5s ease-in 2.6s forwards
+}
+
+.story[data-act="5"] .e3 {
+    animation: pop .5s ease-in 3.4s forwards
+}
+
+@keyframes pop {
+    40% {
+        transform: scale(1.35);
+        filter: brightness(2)
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0
+    }
+}
+
+.laser {
+    opacity: 0;
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1
+}
+
+.story[data-act="5"] .l1 {
+    animation: zap .5s ease-out 1.4s forwards
+}
+
+.story[data-act="5"] .l2 {
+    animation: zap .5s ease-out 2.2s forwards
+}
+
+.story[data-act="5"] .l3 {
+    animation: zap .5s ease-out 3s forwards
+}
+
+@keyframes zap {
+    0% {
+        stroke-dashoffset: 1;
+        opacity: 1
+    }
+
+    60% {
+        stroke-dashoffset: 0;
+        opacity: 1
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0
+    }
+}
+
+/* Confettis */
+.cf {
+    opacity: 0
+}
+
+.story[data-act="5"] .cf {
+    animation: fall 2.2s linear calc(3.7s + var(--i) * .17s) infinite backwards
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-30px) rotate(0deg);
+        opacity: 0
+    }
+
+    10% {
+        opacity: 1
+    }
+
+    100% {
+        transform: translateY(320px) rotate(540deg);
+        opacity: 0
+    }
+}
+
+/* Barre de légende */
+.story-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 18px;
+    border-top: 1px solid var(--line)
+}
+
+.story-caps {
+    position: relative;
+    flex: 1;
+    height: 22px
+}
+
+.cap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .35s ease, transform .35s ease
+}
+
+.cap-n {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--sky)
+}
+
+.story[data-act="1"] .cap[data-act="1"],
+.story[data-act="2"] .cap[data-act="2"],
+.story[data-act="3"] .cap[data-act="3"],
+.story[data-act="4"] .cap[data-act="4"],
+.story[data-act="5"] .cap[data-act="5"] {
+    opacity: 1;
+    transform: none
+}
+
+.story-dots {
+    display: flex;
+    gap: 8px
+}
+
+.story-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, .35);
+    transition: width .3s ease, background .3s ease
+}
+
+.story-dot.active {
+    width: 22px;
+    background: var(--sky)
+}
+
+.story.reset *,
+.story.reset {
+    transition: none !important;
+    animation: none !important
+}
+
+.story.static .en,
+.story.static .laser {
+    opacity: 0
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .story *,
+    .story {
+        transition: none !important;
+        animation: none !important
+    }
+}
