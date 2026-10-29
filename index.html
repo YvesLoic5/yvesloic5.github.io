@@ -24,1135 +24,31 @@
     <meta name="twitter:title" content="Yves Loïc SOATIANAINA — AI &amp; LLMOps Engineer">
     <meta name="twitter:description" content="Agents IA, RAG, serving de LLMs et infrastructure Kubernetes — du prototype à la production.">
     <meta name="twitter:image" content="https://yvesloic5.github.io/assets/img/loic.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Yves Loïc SOATIANAINA",
+        "jobTitle": "AI & LLMOps Engineer",
+        "url": "https://yvesloic5.github.io/",
+        "image": "https://yvesloic5.github.io/assets/img/loic.png",
+        "address": { "@type": "PostalAddress", "addressLocality": "Antananarivo", "addressCountry": "MG" },
+        "knowsAbout": ["AI agents", "RAG", "LLMOps", "LLM serving", "Kubernetes", "vLLM", "LangGraph", "MCP"],
+        "sameAs": [
+            "https://github.com/YvesLoic5",
+            "https://linkedin.com/in/yves-loic",
+            "https://www.kaggle.com/loicyves"
+        ]
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #070b14;
-            --fg: #f1f5f9;
-            --muted: #94a3b8;
-            --dim: #64748b;
-            --line: rgba(148, 163, 184, .14);
-            --glass: rgba(15, 23, 42, .55);
-            --sky: #38bdf8;
-            --indigo: #818cf8;
-            --violet: #c084fc;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 96px
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--fg);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased
-        }
-
-        ::selection {
-            background: rgba(56, 189, 248, .3)
-        }
-
-        .code-font {
-            font-family: 'Fira Code', monospace
-        }
-
-        .text-muted {
-            color: var(--muted)
-        }
-
-        .text-dim {
-            color: var(--dim)
-        }
-
-        /* ---------- Background ---------- */
-        .aurora {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            overflow: hidden;
-            pointer-events: none
-        }
-
-        .aurora span {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(110px);
-            opacity: .35;
-            animation: drift 22s ease-in-out infinite alternate
-        }
-
-        .aurora span:nth-child(1) {
-            width: 560px;
-            height: 560px;
-            background: #0ea5e9;
-            top: -180px;
-            left: -120px
-        }
-
-        .aurora span:nth-child(2) {
-            width: 520px;
-            height: 520px;
-            background: #6366f1;
-            top: 30%;
-            right: -200px;
-            animation-delay: -7s
-        }
-
-        .aurora span:nth-child(3) {
-            width: 460px;
-            height: 460px;
-            background: #a855f7;
-            bottom: -220px;
-            left: 25%;
-            opacity: .22;
-            animation-delay: -13s
-        }
-
-        @keyframes drift {
-            to {
-                transform: translate(80px, 60px) scale(1.12)
-            }
-        }
-
-        .grid-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
-            background-size: 56px 56px;
-            mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 30%, transparent 100%);
-            -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 30%, transparent 100%);
-            opacity: .55
-        }
-
-        /* ---------- Primitives ---------- */
-        .glass {
-            background: var(--glass);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid var(--line)
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, var(--sky), var(--indigo) 55%, var(--violet));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent
-        }
-
-        .eyebrow {
-            font-family: 'Fira Code', monospace;
-            font-size: .8rem;
-            color: var(--sky);
-            letter-spacing: .02em
-        }
-
-        .tag {
-            font-family: 'Fira Code', monospace;
-            font-size: 11px;
-            color: #7dd3fc;
-            padding: 3px 9px;
-            border-radius: 6px;
-            background: rgba(56, 189, 248, .08);
-            border: 1px solid rgba(56, 189, 248, .2);
-            white-space: nowrap
-        }
-
-        .chip {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: .06em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 999px;
-            border: 1px solid var(--line);
-            background: rgba(2, 6, 23, .6);
-            backdrop-filter: blur(8px)
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 22px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: transform .2s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease
-        }
-
-        .btn:hover {
-            transform: translateY(-2px)
-        }
-
-        .btn-primary {
-            color: #fff;
-            background: linear-gradient(135deg, #0ea5e9, #6366f1);
-            box-shadow: 0 8px 30px -8px rgba(99, 102, 241, .6)
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 12px 40px -8px rgba(56, 189, 248, .7)
-        }
-
-        .btn-ghost {
-            color: var(--fg);
-            background: rgba(15, 23, 42, .6);
-            border: 1px solid var(--line)
-        }
-
-        .btn-ghost:hover {
-            border-color: rgba(56, 189, 248, .5);
-            background: rgba(30, 41, 59, .7)
-        }
-
-        /* ---------- Nav ---------- */
-        .nav-link {
-            position: relative;
-            color: var(--muted);
-            font-size: 14px;
-            padding: 6px 12px;
-            border-radius: 999px;
-            transition: color .25s ease, background .25s ease
-        }
-
-        .nav-link:hover {
-            color: var(--fg)
-        }
-
-        .nav-link.active {
-            color: var(--fg);
-            background: rgba(56, 189, 248, .12)
-        }
-
-        .lang-switch {
-            display: inline-flex;
-            padding: 3px;
-            border-radius: 999px;
-            border: 1px solid var(--line);
-            background: rgba(2, 6, 23, .55)
-        }
-
-        .lang-switch button {
-            font-family: 'Fira Code', monospace;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--muted);
-            padding: 5px 11px;
-            border-radius: 999px;
-            transition: color .2s ease, background .2s ease
-        }
-
-        .lang-switch button:hover {
-            color: var(--fg)
-        }
-
-        .lang-switch button.active {
-            color: #fff;
-            background: linear-gradient(135deg, #0ea5e9, #6366f1)
-        }
-
-        /* ---------- Avatar ---------- */
-        .avatar {
-            width: 84px;
-            height: 84px;
-            flex-shrink: 0;
-            padding: 2px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--sky), var(--indigo), var(--violet));
-            box-shadow: 0 10px 40px -10px rgba(99, 102, 241, .6)
-        }
-
-        .avatar-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border-radius: 50%;
-            background: #000
-        }
-
-        .avatar-inner img {
-            position: absolute;
-            width: 210%;
-            max-width: none;
-            left: -50.8%;
-            top: -41.5%
-        }
-
-        /* ---------- Status dot ---------- */
-        .pulse-dot {
-            position: relative;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #34d399
-        }
-
-        .pulse-dot::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: #34d399;
-            animation: ping 1.8s cubic-bezier(0, 0, .2, 1) infinite
-        }
-
-        @keyframes ping {
-
-            75%,
-            100% {
-                transform: scale(2.6);
-                opacity: 0
-            }
-        }
-
-        .caret {
-            display: inline-block;
-            width: 2px;
-            height: 1em;
-            background: var(--sky);
-            margin-left: 4px;
-            vertical-align: -2px;
-            animation: blink 1s steps(1) infinite
-        }
-
-        @keyframes blink {
-            50% {
-                opacity: 0
-            }
-        }
-
-        /* ---------- Project cards ---------- */
-        .project {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform .35s cubic-bezier(.2, .8, .2, 1), border-color .35s ease, box-shadow .35s ease
-        }
-
-        .project::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity .35s ease;
-            background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(56, 189, 248, .12), transparent 45%)
-        }
-
-        .project:hover {
-            transform: translateY(-6px);
-            border-color: rgba(56, 189, 248, .45);
-            box-shadow: 0 24px 60px -24px rgba(56, 189, 248, .35)
-        }
-
-        .project:hover::before {
-            opacity: 1
-        }
-
-        .project>* {
-            position: relative;
-            z-index: 1
-        }
-
-        .cover {
-            position: relative;
-            height: 180px;
-            overflow: hidden;
-            border-bottom: 1px solid var(--line)
-        }
-
-        .cover-img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform .6s cubic-bezier(.2, .8, .2, 1)
-        }
-
-        .project:hover .cover-img {
-            transform: scale(1.07)
-        }
-
-        .cover:has(.cover-contain) {
-            background: #fff
-        }
-
-        .cover:has(.cover-contain) .chip {
-            background: #0b1224
-        }
-
-        .cover-contain {
-            object-fit: contain;
-            padding: 28px 22%
-        }
-
-        .cover-contain.cover-contain-sq {
-            padding: 0;
-            top: -12%;
-            height: 124%;
-            clip-path: inset(5% calc(50% - 100px))
-        }
-
-        .cover.has-img {
-            height: auto;
-            aspect-ratio: 16 / 9;
-            background: #fff
-        }
-
-        .cover.has-img .chip {
-            top: auto;
-            bottom: 12px
-        }
-
-        .hl {
-            color: var(--fg);
-            font-weight: 600
-        }
-
-        .bullet {
-            display: flex;
-            gap: 10px
-        }
-
-        .bullet::before {
-            content: '›';
-            color: var(--sky);
-            font-weight: 700;
-            flex-shrink: 0
-        }
-
-        details.more summary {
-            list-style: none;
-            cursor: pointer
-        }
-
-        details.more summary::-webkit-details-marker {
-            display: none
-        }
-
-        details.more[open] .chev {
-            transform: rotate(180deg)
-        }
-
-        .chev {
-            transition: transform .25s ease
-        }
-
-        .filter-btn {
-            font-size: 13px;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 999px;
-            color: var(--muted);
-            border: 1px solid var(--line);
-            background: rgba(15, 23, 42, .5);
-            transition: all .25s ease
-        }
-
-        .filter-btn:hover {
-            color: var(--fg);
-            border-color: rgba(56, 189, 248, .4)
-        }
-
-        .filter-btn.active {
-            color: #fff;
-            border-color: transparent;
-            background: linear-gradient(135deg, rgba(14, 165, 233, .9), rgba(99, 102, 241, .9))
-        }
-
-        .project.is-hidden {
-            display: none
-        }
-
-        /* ---------- Misc cards ---------- */
-        .lift {
-            transition: transform .3s ease, border-color .3s ease
-        }
-
-        .lift:hover {
-            transform: translateY(-4px);
-            border-color: rgba(129, 140, 248, .45)
-        }
-
-        .icon-tile {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0
-        }
-
-        .grad-border {
-            position: relative;
-            border-radius: 28px
-        }
-
-        .grad-border::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            padding: 1px;
-            border-radius: inherit;
-            background: linear-gradient(135deg, rgba(56, 189, 248, .7), rgba(129, 140, 248, .2) 40%, rgba(192, 132, 252, .7));
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none
-        }
-
-        /* ---------- Story ---------- */
-        .story svg {
-            display: block;
-            width: 100%;
-            height: auto;
-            font-family: 'Inter', sans-serif
-        }
-
-        .story .bub text {
-            font-size: 15px;
-            font-weight: 500;
-            fill: #e2e8f0;
-            text-anchor: middle
-        }
-
-        .story .bub rect,
-        .story .bub path {
-            fill: rgba(11, 18, 36, .94);
-            stroke: rgba(148, 163, 184, .35);
-            stroke-width: 1
-        }
-
-        .story .bub path {
-            stroke: none
-        }
-
-        .story .bub text.bub-h {
-            font-weight: 700;
-            fill: #7dd3fc
-        }
-
-        .story .bub {
-            opacity: 0;
-            transition: opacity .4s ease
-        }
-
-        .story[data-act="1"] .b1 {
-            opacity: 1;
-            transition-delay: 1.9s
-        }
-
-        .story[data-act="2"] .b2 {
-            opacity: 1;
-            transition-delay: .3s
-        }
-
-        .story[data-act="2"] .b3 {
-            opacity: 1;
-            transition-delay: 3.2s
-        }
-
-        .story[data-act="3"] .b4 {
-            opacity: 1;
-            transition-delay: .3s
-        }
-
-        .story[data-act="4"] .b5 {
-            opacity: 1;
-            transition-delay: .5s
-        }
-
-        .story[data-act="4"] .b6 {
-            opacity: 1;
-            transition-delay: 1.8s
-        }
-
-        .story[data-act="5"] .b7 {
-            opacity: 1;
-            transition-delay: 3.4s
-        }
-
-        .star {
-            animation: twinkle 3s ease-in-out infinite
-        }
-
-        @keyframes twinkle {
-            50% {
-                opacity: .2
-            }
-        }
-
-        /* Client */
-        .cl {
-            transform: translate(-110px, 340px);
-            transition: transform 1.8s cubic-bezier(.2, .8, .2, 1)
-        }
-
-        .story:is([data-act="1"], [data-act="2"], [data-act="3"], [data-act="4"]) .cl {
-            transform: translate(175px, 340px)
-        }
-
-        .story[data-act="5"] .cl {
-            transform: translate(130px, 300px);
-            transition-duration: 1s
-        }
-
-        .cl-fx {
-            filter: saturate(.45) brightness(.85);
-            transition: filter 1s ease
-        }
-
-        .story:is([data-act="4"], [data-act="5"]) .cl-fx {
-            filter: none
-        }
-
-        .story[data-act="1"] .cl-bob {
-            animation: walk .45s ease-in-out 4
-        }
-
-        @keyframes walk {
-            50% {
-                transform: translateY(-5px)
-            }
-        }
-
-        .cl-upper {
-            --slump: 8deg;
-            transform: translate(0px, -50px) rotate(var(--slump)) translate(0px, 50px);
-            transition: transform .8s ease
-        }
-
-        .story:is([data-act="4"], [data-act="5"]) .cl-upper {
-            --slump: 0deg
-        }
-
-        .c-armL {
-            transform: translate(-24px, -120px) rotate(6deg);
-            transition: transform .8s ease
-        }
-
-        .c-armR {
-            transform: translate(24px, -120px) rotate(-6deg);
-            transition: transform .8s ease
-        }
-
-        .story[data-act="4"] .c-armL {
-            transform: translate(-24px, -120px) rotate(40deg);
-            transition-delay: 1.6s
-        }
-
-        .story[data-act="4"] .c-armR {
-            transform: translate(24px, -120px) rotate(-40deg);
-            transition-delay: 1.6s
-        }
-
-        .story[data-act="5"] .c-armL {
-            transform: translate(-24px, -120px) rotate(150deg)
-        }
-
-        .story[data-act="5"] .c-armR {
-            transform: translate(24px, -120px) rotate(-150deg)
-        }
-
-        .f-happy,
-        .crown {
-            opacity: 0;
-            transition: opacity .4s ease, transform .5s cubic-bezier(.2, .9, .3, 1.4)
-        }
-
-        .crown {
-            transform: translateY(-30px)
-        }
-
-        .f-tired {
-            transition: opacity .4s ease
-        }
-
-        .story:is([data-act="4"], [data-act="5"]) .f-happy {
-            opacity: 1;
-            transition-delay: .3s
-        }
-
-        .story:is([data-act="4"], [data-act="5"]) .f-tired {
-            opacity: 0
-        }
-
-        .story[data-act="5"] .crown {
-            opacity: 1;
-            transform: none;
-            transition-delay: 3.2s
-        }
-
-        .aura {
-            transition: opacity .8s ease
-        }
-
-        .aura-sad {
-            opacity: .9
-        }
-
-        .aura-gold {
-            opacity: 0
-        }
-
-        .story:is([data-act="4"], [data-act="5"]) .aura-sad {
-            opacity: 0
-        }
-
-        .story[data-act="5"] .aura-gold {
-            opacity: 1
-        }
-
-        .sweats {
-            opacity: 0;
-            transition: opacity .5s ease
-        }
-
-        .story:is([data-act="1"], [data-act="2"], [data-act="3"]) .sweats {
-            opacity: 1
-        }
-
-        .sweat {
-            animation: drip 1.6s ease-in infinite
-        }
-
-        @keyframes drip {
-            0% {
-                transform: translateY(-6px);
-                opacity: 0
-            }
-
-            30% {
-                opacity: 1
-            }
-
-            100% {
-                transform: translateY(26px);
-                opacity: 0
-            }
-        }
-
-        /* Moi */
-        .me {
-            transform: translate(470px, 340px);
-            transition: transform 1.2s cubic-bezier(.2, .8, .2, 1)
-        }
-
-        .story[data-act="5"] .me {
-            transform: translate(548px, 178px) scale(.55)
-        }
-
-        .me-bob,
-        .rb-bob {
-            animation: bob 2.8s ease-in-out infinite
-        }
-
-        @keyframes bob {
-            50% {
-                transform: translateY(-3px)
-            }
-        }
-
-        .m-armL {
-            transform: translate(-34px, -118px) rotate(0deg);
-            transition: transform .6s ease
-        }
-
-        .m-armR {
-            transform: translate(34px, -118px) rotate(0deg);
-            transition: transform .6s ease
-        }
-
-        .story[data-act="3"] .m-armL {
-            transform: translate(-34px, -118px) rotate(80deg)
-        }
-
-        .story[data-act="4"] .m-armR {
-            transform: translate(34px, -118px) rotate(-130deg);
-            animation: wave .6s ease-in-out .7s infinite alternate
-        }
-
-        @keyframes wave {
-            to {
-                transform: translate(34px, -118px) rotate(-155deg)
-            }
-        }
-
-        .wrench {
-            opacity: 0;
-            transition: opacity .4s ease
-        }
-
-        .story[data-act="3"] .wrench {
-            opacity: 1;
-            animation: hammer .35s ease-in-out infinite alternate
-        }
-
-        @keyframes hammer {
-            to {
-                transform: rotate(-18deg)
-            }
-        }
-
-        /* Établi */
-        .bench {
-            opacity: 0;
-            transition: opacity .5s ease
-        }
-
-        .story[data-act="3"] .bench {
-            opacity: 1
-        }
-
-        /* Robot */
-        .rb {
-            transform: translate(305px, 310px);
-            transition: transform 1.2s cubic-bezier(.2, .8, .2, 1)
-        }
-
-        .story[data-act="4"] .rb {
-            transform: translate(250px, 340px);
-            transition-delay: .9s
-        }
-
-        .story[data-act="5"] .rb {
-            transform: translate(330px, 340px)
-        }
-
-        .part {
-            opacity: 0;
-            transform: translate(var(--dx), var(--dy)) scale(.4);
-            transition: transform .7s cubic-bezier(.2, .9, .3, 1.3), opacity .4s ease
-        }
-
-        .story:is([data-act="3"], [data-act="4"], [data-act="5"]) .part {
-            opacity: 1;
-            transform: none;
-            transition-delay: var(--d)
-        }
-
-        .r-armL {
-            transform: translate(-24px, -76px) rotate(0deg);
-            transition: transform .5s ease
-        }
-
-        .r-armR {
-            transform: translate(24px, -76px) rotate(0deg);
-            transition: transform .5s ease
-        }
-
-        .story[data-act="4"] .r-armL {
-            transform: translate(-24px, -76px) rotate(140deg);
-            transition-delay: 1.4s
-        }
-
-        .story[data-act="5"] .r-armR {
-            transform: translate(24px, -76px) rotate(-90deg);
-            transition-delay: .6s
-        }
-
-        .eye {
-            transform-box: fill-box;
-            transform-origin: center;
-            animation: blink 4s infinite
-        }
-
-        @keyframes blink {
-
-            0%,
-            94%,
-            100% {
-                transform: scaleY(1)
-            }
-
-            97% {
-                transform: scaleY(.1)
-            }
-        }
-
-        .pulse {
-            animation: pulse 1.2s ease-in-out infinite
-        }
-
-        @keyframes pulse {
-            50% {
-                opacity: .35
-            }
-        }
-
-        .spark {
-            opacity: 0
-        }
-
-        .story[data-act="3"] .spark {
-            animation: spark .5s linear infinite
-        }
-
-        @keyframes spark {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0) scale(1)
-            }
-
-            100% {
-                opacity: 0;
-                transform: translate(8px, -14px) scale(.2)
-            }
-        }
-
-        .otag {
-            opacity: 0;
-            transition: opacity .5s ease
-        }
-
-        .story[data-act="3"] .otag {
-            opacity: 1;
-            transition-delay: 2.2s
-        }
-
-        /* Podium */
-        .podium {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity .6s ease, transform .8s cubic-bezier(.2, .8, .2, 1)
-        }
-
-        .story[data-act="5"] .podium {
-            opacity: 1;
-            transform: none
-        }
-
-        /* Adversaires */
-        .en {
-            opacity: 0;
-            transition: opacity .8s ease .2s
-        }
-
-        .story[data-act="5"] .en {
-            opacity: 1
-        }
-
-        .en-bob {
-            animation: bob 1.6s ease-in-out infinite
-        }
-
-        .en-in {
-            transform-box: fill-box;
-            transform-origin: center
-        }
-
-        .story[data-act="5"] .e1 {
-            animation: pop .5s ease-in 1.8s forwards
-        }
-
-        .story[data-act="5"] .e2 {
-            animation: pop .5s ease-in 2.6s forwards
-        }
-
-        .story[data-act="5"] .e3 {
-            animation: pop .5s ease-in 3.4s forwards
-        }
-
-        @keyframes pop {
-            40% {
-                transform: scale(1.35);
-                filter: brightness(2)
-            }
-
-            100% {
-                transform: scale(0);
-                opacity: 0
-            }
-        }
-
-        .laser {
-            opacity: 0;
-            stroke-dasharray: 1 1;
-            stroke-dashoffset: 1
-        }
-
-        .story[data-act="5"] .l1 {
-            animation: zap .5s ease-out 1.4s forwards
-        }
-
-        .story[data-act="5"] .l2 {
-            animation: zap .5s ease-out 2.2s forwards
-        }
-
-        .story[data-act="5"] .l3 {
-            animation: zap .5s ease-out 3s forwards
-        }
-
-        @keyframes zap {
-            0% {
-                stroke-dashoffset: 1;
-                opacity: 1
-            }
-
-            60% {
-                stroke-dashoffset: 0;
-                opacity: 1
-            }
-
-            100% {
-                stroke-dashoffset: 0;
-                opacity: 0
-            }
-        }
-
-        /* Confettis */
-        .cf {
-            opacity: 0
-        }
-
-        .story[data-act="5"] .cf {
-            animation: fall 2.2s linear calc(3.7s + var(--i) * .17s) infinite backwards
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-30px) rotate(0deg);
-                opacity: 0
-            }
-
-            10% {
-                opacity: 1
-            }
-
-            100% {
-                transform: translateY(320px) rotate(540deg);
-                opacity: 0
-            }
-        }
-
-        /* Barre de légende */
-        .story-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 12px 18px;
-            border-top: 1px solid var(--line)
-        }
-
-        .story-caps {
-            position: relative;
-            flex: 1;
-            height: 22px
-        }
-
-        .cap {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            opacity: 0;
-            transform: translateY(6px);
-            transition: opacity .35s ease, transform .35s ease
-        }
-
-        .cap-n {
-            font-family: 'Fira Code', monospace;
-            font-size: 12px;
-            color: var(--sky)
-        }
-
-        .story[data-act="1"] .cap[data-act="1"],
-        .story[data-act="2"] .cap[data-act="2"],
-        .story[data-act="3"] .cap[data-act="3"],
-        .story[data-act="4"] .cap[data-act="4"],
-        .story[data-act="5"] .cap[data-act="5"] {
-            opacity: 1;
-            transform: none
-        }
-
-        .story-dots {
-            display: flex;
-            gap: 8px
-        }
-
-        .story-dot {
-            width: 8px;
-            height: 8px;
-            padding: 0;
-            border-radius: 999px;
-            background: rgba(148, 163, 184, .35);
-            transition: width .3s ease, background .3s ease
-        }
-
-        .story-dot.active {
-            width: 22px;
-            background: var(--sky)
-        }
-
-        .story.reset *,
-        .story.reset {
-            transition: none !important;
-            animation: none !important
-        }
-
-        .story.static .en,
-        .story.static .laser {
-            opacity: 0
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-
-            .story *,
-            .story {
-                transition: none !important;
-                animation: none !important
-            }
-        }
-
-        /* ---------- Reveal ---------- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity .8s ease, transform .8s cubic-bezier(.2, .8, .2, 1)
-        }
-
-        .reveal.in {
-            opacity: 1;
-            transform: none
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto
-            }
-
-            .reveal {
-                opacity: 1;
-                transform: none
-            }
-
-            .aurora span,
-            .pulse-dot::after,
-            .caret {
-                animation: none
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/story.css">
 </head>
 
 <body>
@@ -1164,26 +60,28 @@
         <nav class="glass max-w-5xl mx-auto rounded-2xl pl-5 pr-3 py-2.5 flex items-center justify-between">
             <a href="#home" class="code-font font-semibold text-[15px]"><span class="text-dim">&lt;</span><span
                     class="gradient-text">YvesLoic</span><span class="text-dim"> /&gt;</span></a>
-            <div class="hidden md:flex items-center gap-1" id="navLinks">
+            <div class="hidden lg:flex items-center gap-1" id="navLinks">
+                <a href="#services" class="nav-link">Services</a>
                 <a href="#work" class="nav-link">Réalisations</a>
+                <a href="#process" class="nav-link">Méthode</a>
                 <a href="#skills" class="nav-link">Stack</a>
                 <a href="#awards" class="nav-link">Distinctions</a>
-                <a href="#contact" class="nav-link">Contact</a>
             </div>
             <div class="flex items-center gap-2">
                 <div class="lang-switch" id="langSwitch" role="group" aria-label="Langue">
                     <button type="button" data-lang="fr" class="active" aria-pressed="true">FR</button>
                     <button type="button" data-lang="en" aria-pressed="false">EN</button>
                 </div>
-                <a href="assets/Yves_Loic_SOATIANAINA_CV.pdf" target="_blank" rel="noopener"
-                    class="hidden sm:inline-flex btn btn-ghost !py-2 !px-4 !text-[13px]"><i
-                        class="fas fa-download text-xs"></i> CV</a>
-                <button id="menuBtn" class="md:hidden w-10 h-10 rounded-xl flex items-center justify-center hover:bg-slate-800/60"
+                <a href="#contact" class="hidden sm:inline-flex btn btn-primary !py-2 !px-4 !text-[13px]">Discutons
+                    <i class="fas fa-arrow-right text-[10px]"></i></a>
+                <button id="menuBtn" class="lg:hidden w-10 h-10 rounded-xl flex items-center justify-center hover:bg-slate-800/60"
                     aria-label="Ouvrir le menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
             </div>
         </nav>
-        <div id="mobileMenu" class="hidden md:hidden glass max-w-5xl mx-auto mt-2 rounded-2xl p-3 flex flex-col">
+        <div id="mobileMenu" class="hidden lg:hidden glass max-w-5xl mx-auto mt-2 rounded-2xl p-3 flex flex-col">
+            <a href="#services" class="nav-link !py-3">Services</a>
             <a href="#work" class="nav-link !py-3">Réalisations</a>
+            <a href="#process" class="nav-link !py-3">Méthode</a>
             <a href="#skills" class="nav-link !py-3">Stack</a>
             <a href="#awards" class="nav-link !py-3">Distinctions</a>
             <a href="#contact" class="nav-link !py-3">Contact</a>
@@ -1193,44 +91,74 @@
     </header>
 
     <!-- ================= HERO ================= -->
-    <section id="home" class="min-h-screen flex items-center px-6 pt-32 pb-20">
-        <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
+    <section id="home" class="min-h-screen flex items-center px-6 pt-28 pb-16">
+        <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-[1.15fr_1fr] gap-12 items-center">
             <div>
-                <div class="flex items-center gap-4 mb-8">
+                <div class="flex items-center gap-4 mb-6">
                     <div class="avatar">
                         <div class="avatar-inner"><img src="assets/img/loic.png"
                                 alt="Portrait de Yves Loïc SOATIANAINA en tenue de diplômé" width="626" height="545"
                                 fetchpriority="high"></div>
                     </div>
-                    <div class="inline-flex items-center gap-2.5 glass rounded-full px-4 py-1.5 text-xs font-medium">
-                        <span class="pulse-dot"></span>
-                        <span class="text-muted">Disponible pour de nouvelles missions</span>
+                    <div>
+                        <p class="font-bold text-lg leading-tight">Yves Loïc SOATIANAINA</p>
+                        <p class="code-font text-sm text-muted mt-1 h-5">
+                            <span class="text-dim">&gt;</span> <span id="typed">AI Engineer</span><span
+                                class="caret"></span>
+                        </p>
                     </div>
                 </div>
-                <h1 class="text-[2.6rem] sm:text-6xl lg:text-[4.2rem] font-extrabold leading-[1.05] tracking-tight mb-5">
-                    Yves Loïc<br><span class="gradient-text">SOATIANAINA</span>
+                <div class="inline-flex items-center gap-2.5 glass rounded-full px-4 py-1.5 text-xs font-medium mb-6">
+                    <span class="pulse-dot"></span>
+                    <span class="text-muted">Disponible pour de nouvelles missions</span>
+                </div>
+                <h1 class="text-[2.3rem] sm:text-5xl lg:text-[3.3rem] font-extrabold leading-[1.08] tracking-tight mb-5">
+                    Je construis des <span class="gradient-text">agents IA</span> qui tournent en production.
                 </h1>
-                <p class="code-font text-base md:text-lg text-muted mb-7 h-7">
-                    <span class="text-dim">&gt;</span> <span id="typed">AI Engineer</span><span class="caret"></span>
-                </p>
-                <p class="text-muted text-base md:text-lg max-w-xl leading-relaxed mb-10">
-                    Je vous aide à concevoir vos besoins en <span class="text-slate-100">IA agentique</span>, du
-                    prototype à la production — infrastructure <span class="text-slate-100">Kubernetes</span>,
-                    pipelines <span class="text-slate-100">LLMOps</span>, RAG &amp; observabilité. Full remote depuis
-                    Antananarivo.
+                <p class="text-muted text-base md:text-lg max-w-xl leading-relaxed mb-8">
+                    Agents, RAG, serving de LLMs et infrastructure Kubernetes : j'accompagne vos équipes du
+                    prototype au déploiement, avec des systèmes fiables, mesurés et maintenables.
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <a href="#work" class="btn btn-primary">Voir mes réalisations <i
+                    <a href="#contact" class="btn btn-primary">Discutons de votre projet <i
                             class="fas fa-arrow-right text-xs"></i></a>
-                    <a href="#contact" class="btn btn-ghost">Me contacter</a>
+                    <a href="#work" class="btn btn-ghost">Voir mes réalisations</a>
                 </div>
-                <div class="flex items-center gap-5 mt-10 text-muted">
+                <div class="mt-8 pt-6 border-t" style="border-color:var(--line)">
+                    <div class="flex flex-wrap gap-x-8 gap-y-5">
+                        <div>
+                            <p class="proof-label">En production chez</p>
+                            <div class="flex flex-wrap gap-2">
+                                <a href="#p-swiftask" class="logo-tile" aria-label="Swiftask"><img
+                                        src="assets/img/logos/swiftask.png" alt="Swiftask" width="329" height="86"></a>
+                                <a href="#p-souveraine" class="logo-tile" aria-label="IA Souveraine"><img
+                                        src="assets/img/logos/ia-souveraine.png" alt="" width="314"
+                                        height="357"><span class="logo-name">IA Souveraine</span></a>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="proof-label">Contributeur</p>
+                            <div class="flex flex-wrap gap-2">
+                                <a href="https://github.com/huggingface/speech-to-speech/pull/344" target="_blank"
+                                    rel="noopener" class="proof"><span>🤗</span>Hugging Face</a>
+                                <a href="https://www.kaggle.com/loicyves" target="_blank" rel="noopener"
+                                    class="proof"><i class="fab fa-kaggle text-cyan-300"></i>Kaggle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-5 mt-6 text-muted">
                     <a href="https://github.com/YvesLoic5" target="_blank" rel="noopener" aria-label="GitHub"
                         class="hover:text-sky-400 transition-colors"><i class="fab fa-github text-xl"></i></a>
                     <a href="https://linkedin.com/in/yves-loic" target="_blank" rel="noopener" aria-label="LinkedIn"
                         class="hover:text-sky-400 transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="https://www.kaggle.com/loicyves" target="_blank" rel="noopener" aria-label="Kaggle"
+                        class="hover:text-sky-400 transition-colors"><i class="fab fa-kaggle text-xl"></i></a>
                     <a href="mailto:yvesloic58@gmail.com" aria-label="Email"
                         class="hover:text-sky-400 transition-colors"><i class="fas fa-envelope text-xl"></i></a>
+                    <a href="assets/Yves_Loic_SOATIANAINA_CV.pdf" target="_blank" rel="noopener"
+                        class="text-sm font-semibold hover:text-sky-400 transition-colors"><i
+                            class="fas fa-download text-xs mr-1.5"></i>CV</a>
                     <span class="h-5 w-px bg-slate-700"></span>
                     <span class="text-sm text-dim"><i class="fas fa-location-dot mr-1.5"></i>Antananarivo · Remote</span>
                 </div>
@@ -1282,6 +210,23 @@
                                 <feMergeNode in="SourceGraphic" />
                             </feMerge>
                         </filter>
+                        <g id="enemy">
+                            <g fill="url(#gEnemy)">
+                                <path d="M-6,-20 L0,-34 L6,-20Z" />
+                                <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(60)" />
+                                <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(120)" />
+                                <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(180)" />
+                                <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(240)" />
+                                <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(300)" />
+                                <circle r="22" />
+                            </g>
+                            <circle cx="-8" cy="-4" r="5" fill="#fff" />
+                            <circle cx="8" cy="-4" r="5" fill="#fff" />
+                            <circle cx="-7" cy="-3" r="2.4" fill="#0f172a" />
+                            <circle cx="7" cy="-3" r="2.4" fill="#0f172a" />
+                            <path d="M-14,-12 L-3,-7 M14,-12 L3,-7" stroke="#450a0a" stroke-width="2.5" stroke-linecap="round" />
+                            <path d="M-8,10 l4,-4 l4,4 l4,-4 l4,4" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round" />
+                        </g>
                     </defs>
 
                     <!-- Décor -->
@@ -1474,23 +419,7 @@
                     <g class="en" style="transform:translate(430px,280px)">
                         <g class="en-bob">
                             <g class="en-in e1">
-                                <g fill="url(#gEnemy)">
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(60)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(120)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(180)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(240)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(300)" />
-                                    <circle r="22" />
-                                </g>
-                                <circle cx="-8" cy="-4" r="5" fill="#fff" />
-                                <circle cx="8" cy="-4" r="5" fill="#fff" />
-                                <circle cx="-7" cy="-3" r="2.4" fill="#0f172a" />
-                                <circle cx="7" cy="-3" r="2.4" fill="#0f172a" />
-                                <path d="M-14,-12 L-3,-7 M14,-12 L3,-7" stroke="#450a0a" stroke-width="2.5"
-                                    stroke-linecap="round" />
-                                <path d="M-8,10 l4,-4 l4,4 l4,-4 l4,4" fill="none" stroke="#fff" stroke-width="2"
-                                    stroke-linejoin="round" />
+                                <use href="#enemy" />
                                 <text y="-44" text-anchor="middle" font-size="20">⏰</text>
                             </g>
                         </g>
@@ -1498,23 +427,7 @@
                     <g class="en" style="transform:translate(495px,248px)">
                         <g class="en-bob" style="animation-delay:.5s">
                             <g class="en-in e2">
-                                <g fill="url(#gEnemy)">
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(60)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(120)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(180)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(240)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(300)" />
-                                    <circle r="22" />
-                                </g>
-                                <circle cx="-8" cy="-4" r="5" fill="#fff" />
-                                <circle cx="8" cy="-4" r="5" fill="#fff" />
-                                <circle cx="-7" cy="-3" r="2.4" fill="#0f172a" />
-                                <circle cx="7" cy="-3" r="2.4" fill="#0f172a" />
-                                <path d="M-14,-12 L-3,-7 M14,-12 L3,-7" stroke="#450a0a" stroke-width="2.5"
-                                    stroke-linecap="round" />
-                                <path d="M-8,10 l4,-4 l4,4 l4,-4 l4,4" fill="none" stroke="#fff" stroke-width="2"
-                                    stroke-linejoin="round" />
+                                <use href="#enemy" />
                                 <text y="-44" text-anchor="middle" font-size="20">💸</text>
                             </g>
                         </g>
@@ -1522,23 +435,7 @@
                     <g class="en" style="transform:translate(553px,292px)">
                         <g class="en-bob" style="animation-delay:1s">
                             <g class="en-in e3">
-                                <g fill="url(#gEnemy)">
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(60)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(120)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(180)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(240)" />
-                                    <path d="M-6,-20 L0,-34 L6,-20Z" transform="rotate(300)" />
-                                    <circle r="22" />
-                                </g>
-                                <circle cx="-8" cy="-4" r="5" fill="#fff" />
-                                <circle cx="8" cy="-4" r="5" fill="#fff" />
-                                <circle cx="-7" cy="-3" r="2.4" fill="#0f172a" />
-                                <circle cx="7" cy="-3" r="2.4" fill="#0f172a" />
-                                <path d="M-14,-12 L-3,-7 M14,-12 L3,-7" stroke="#450a0a" stroke-width="2.5"
-                                    stroke-linecap="round" />
-                                <path d="M-8,10 l4,-4 l4,4 l4,-4 l4,4" fill="none" stroke="#fff" stroke-width="2"
-                                    stroke-linejoin="round" />
+                                <use href="#enemy" />
                                 <text y="-44" text-anchor="middle" font-size="20">🔁</text>
                             </g>
                         </g>
@@ -1647,14 +544,94 @@
         </div>
     </section>
 
+    <!-- ================= SERVICES ================= -->
+    <section id="services" class="py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="reveal mb-12 max-w-3xl">
+                <p class="eyebrow mb-3">// 01 — services</p>
+                <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Ce que je <span
+                        class="gradient-text">construis pour vous</span></h2>
+                <p class="text-muted leading-relaxed">Quatre expertises complémentaires pour transformer une idée d'IA
+                    en un produit que vos utilisateurs adoptent au quotidien.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-5">
+                <article class="service glass rounded-2xl p-7 flex flex-col reveal">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="icon-tile bg-sky-500/15 text-sky-300"><i class="fas fa-robot"></i></div>
+                        <span class="code-font text-xs text-dim">01</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Agents IA &amp; automatisation</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-5">Des agents qui exécutent de vraies tâches
+                        métier — CRM, documents, emails, outils internes — en se branchant sur vos systèmes existants.</p>
+                    <ul class="space-y-2 text-sm text-muted mb-6">
+                        <li class="bullet"><span>Workflows multi-étapes avec LangGraph</span></li>
+                        <li class="bullet"><span>Connexion à vos outils via MCP : CRM, Drive, Notion, Supabase…</span></li>
+                        <li class="bullet"><span>Choix et routage parmi 80+ modèles LLM</span></li>
+                    </ul>
+                    <a href="#p-swiftask" class="svc-link mt-auto">Voir le cas Swiftask <i
+                            class="fas fa-arrow-right text-xs"></i></a>
+                </article>
+                <article class="service glass rounded-2xl p-7 flex flex-col reveal">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="icon-tile bg-violet-500/15 text-violet-300"><i class="fas fa-book-open"></i></div>
+                        <span class="code-font text-xs text-dim">02</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Assistants sur vos données (RAG)</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-5">Vos documents — PDF, images, bases de
+                        connaissances — deviennent interrogeables en langage naturel, avec des réponses sourcées et
+                        une qualité mesurée.</p>
+                    <ul class="space-y-2 text-sm text-muted mb-6">
+                        <li class="bullet"><span>Recherche hybride dense + sparse et reranking</span></li>
+                        <li class="bullet"><span>RAG multimodal texte + images</span></li>
+                        <li class="bullet"><span>Évaluation chiffrée avec RAGAS</span></li>
+                    </ul>
+                    <a href="#p-rag" class="svc-link mt-auto">Voir le projet Multimodal RAG <i
+                            class="fas fa-arrow-right text-xs"></i></a>
+                </article>
+                <article class="service glass rounded-2xl p-7 flex flex-col reveal">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="icon-tile bg-emerald-500/15 text-emerald-300"><i class="fas fa-server"></i></div>
+                        <span class="code-font text-xs text-dim">03</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">LLM serving &amp; IA souveraine</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-5">Des modèles open source hébergés sur votre
+                        infrastructure ou dans votre pays : vos données restent chez vous et les coûts restent maîtrisés.</p>
+                    <ul class="space-y-2 text-sm text-muted mb-6">
+                        <li class="bullet"><span>Serving optimisé avec vLLM et Ollama</span></li>
+                        <li class="bullet"><span>Déploiement et scaling sur Kubernetes</span></li>
+                        <li class="bullet"><span>Sélection et intégration de modèles souverains</span></li>
+                    </ul>
+                    <a href="#p-souveraine" class="svc-link mt-auto">Voir le cas IA Souveraine <i
+                            class="fas fa-arrow-right text-xs"></i></a>
+                </article>
+                <article class="service glass rounded-2xl p-7 flex flex-col reveal">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="icon-tile bg-amber-500/15 text-amber-300"><i class="fas fa-gauge-high"></i></div>
+                        <span class="code-font text-xs text-dim">04</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">LLMOps &amp; mise en production</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-5">Ce qui sépare une démo d'un produit fiable :
+                        CI/CD, monitoring, cache, fallbacks et observabilité de bout en bout.</p>
+                    <ul class="space-y-2 text-sm text-muted mb-6">
+                        <li class="bullet"><span>CI/CD multi-environnements avec GitHub Actions</span></li>
+                        <li class="bullet"><span>Monitoring et observabilité avec Grafana</span></li>
+                        <li class="bullet"><span>Cache sémantique, retries et fallbacks de modèles</span></li>
+                    </ul>
+                    <a href="#skills" class="svc-link mt-auto">Voir ma stack <i
+                            class="fas fa-arrow-right text-xs"></i></a>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- ================= WORK ================= -->
     <section id="work" class="py-24 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
                 <div>
-                    <p class="eyebrow mb-3">// 01 — réalisations</p>
-                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Sous le <span
-                            class="gradient-text">capot</span></h2>
+                    <p class="eyebrow mb-3">// 02 — réalisations</p>
+                    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Des projets <span
+                            class="gradient-text">concrets</span>, en production</h2>
                     <p class="text-muted max-w-2xl leading-relaxed">AI &amp; LLMOps Engineer, je collabore avec des
                         plateformes SAAS AI Hub comme <a href="https://www.swiftask.ai" target="_blank" rel="noopener"
                             class="text-sky-300 hover:text-sky-200 underline decoration-sky-500/40 underline-offset-4">Swiftask</a>
@@ -1673,7 +650,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-6 gap-6" id="projects">
 
                 <!-- Swiftask -->
-                <article class="project glass lg:col-span-3 reveal" data-cat="prod">
+                <article id="p-swiftask" class="project glass lg:col-span-3 reveal" data-cat="prod">
                     <div class="cover">
                         <img class="cover-img cover-contain" src="assets/img/swiftask.png" alt="Logo Swiftask"
                             loading="lazy">
@@ -1702,7 +679,7 @@
                 </article>
 
                 <!-- IA Souveraine -->
-                <article class="project glass lg:col-span-3 reveal" data-cat="prod">
+                <article id="p-souveraine" class="project glass lg:col-span-3 reveal" data-cat="prod">
                     <div class="cover">
                         <img class="cover-img cover-contain cover-contain-sq" src="assets/img/ia-souveraine.png"
                             alt="Logo IA Souveraine" loading="lazy">
@@ -1735,7 +712,7 @@
                 </article>
 
                 <!-- Multimodal RAG -->
-                <article class="project glass lg:col-span-2 reveal" data-cat="side">
+                <article id="p-rag" class="project glass lg:col-span-2 reveal" data-cat="side">
                     <div class="cover has-img">
                         <img class="cover-img" src="assets/img/multimodal-rag.jpg"
                             alt="Schéma d'un système RAG multimodal : images, texte et graphiques vers un modèle" loading="lazy">
@@ -1840,11 +817,72 @@
         </div>
     </section>
 
+    <!-- ================= PROCESS ================= -->
+    <section id="process" class="py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="reveal mb-12 max-w-3xl">
+                <p class="eyebrow mb-3">// 03 — méthode</p>
+                <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Du besoin au <span
+                        class="gradient-text">résultat</span></h2>
+                <p class="text-muted leading-relaxed">Pas de boîte noire : à chaque étape, vous savez ce qui est livré
+                    et pourquoi.</p>
+            </div>
+            <ol class="steps grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+                <li class="step glass rounded-2xl p-6 reveal">
+                    <span class="step-num">01</span>
+                    <h3 class="font-bold text-lg mt-4 mb-2">Cadrage</h3>
+                    <p class="text-sm text-muted leading-relaxed mb-4">On part de votre problème métier : objectifs,
+                        données disponibles, contraintes et critères de succès.</p>
+                    <p class="text-xs code-font text-sky-300"><span class="text-dim">Livrable :</span> note de cadrage</p>
+                </li>
+                <li class="step glass rounded-2xl p-6 reveal">
+                    <span class="step-num">02</span>
+                    <h3 class="font-bold text-lg mt-4 mb-2">Prototype</h3>
+                    <p class="text-sm text-muted leading-relaxed mb-4">Un POC fonctionnel sur vos propres données pour
+                        valider la valeur vite, avant d'investir davantage.</p>
+                    <p class="text-xs code-font text-sky-300"><span class="text-dim">Livrable :</span> démo utilisable</p>
+                </li>
+                <li class="step glass rounded-2xl p-6 reveal">
+                    <span class="step-num">03</span>
+                    <h3 class="font-bold text-lg mt-4 mb-2">Production</h3>
+                    <p class="text-sm text-muted leading-relaxed mb-4">Infrastructure, tests, évaluation et
+                        observabilité : un système robuste, prêt pour vos utilisateurs.</p>
+                    <p class="text-xs code-font text-sky-300"><span class="text-dim">Livrable :</span> système déployé</p>
+                </li>
+                <li class="step glass rounded-2xl p-6 reveal">
+                    <span class="step-num">04</span>
+                    <h3 class="font-bold text-lg mt-4 mb-2">Suivi</h3>
+                    <p class="text-sm text-muted leading-relaxed mb-4">Monitoring, optimisation des coûts et des
+                        performances, itérations selon les retours terrain.</p>
+                    <p class="text-xs code-font text-sky-300"><span class="text-dim">Livrable :</span> amélioration continue</p>
+                </li>
+            </ol>
+            <div class="glass rounded-2xl p-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 reveal">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-file-code text-sky-300 w-5 text-center"></i>
+                    <p class="text-sm">Code documenté et transférable</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-chart-simple text-violet-300 w-5 text-center"></i>
+                    <p class="text-sm">Qualité mesurée, pas supposée</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-language text-emerald-300 w-5 text-center"></i>
+                    <p class="text-sm">Échanges en français et en anglais</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-clock text-amber-300 w-5 text-center"></i>
+                    <p class="text-sm">Fuseau UTC+3, proche de l'Europe</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ================= SKILLS ================= -->
     <section id="skills" class="py-24 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="reveal mb-12">
-                <p class="eyebrow mb-3">// 02 — stack</p>
+                <p class="eyebrow mb-3">// 04 — stack</p>
                 <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Ma <span
                         class="gradient-text">boîte à outils</span></h2>
                 <p class="text-muted max-w-2xl">Ce que j'utilise au quotidien pour construire, déployer et monitorer des
@@ -1917,11 +955,22 @@
     <section id="awards" class="py-24 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="reveal mb-12">
-                <p class="eyebrow mb-3">// 03 — distinctions</p>
+                <p class="eyebrow mb-3">// 05 — distinctions</p>
                 <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">Distinctions &amp; <span
                         class="gradient-text">communauté</span></h2>
             </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <a href="https://www.kaggle.com/loicyves" target="_blank" rel="noopener"
+                    class="glass lift rounded-2xl p-6 flex gap-4 sm:col-span-2 group reveal">
+                    <div class="icon-tile bg-cyan-500/15 text-cyan-300"><i class="fab fa-kaggle text-lg"></i></div>
+                    <div>
+                        <h3 class="font-semibold mb-1">Kaggle Contributor</h3>
+                        <p class="text-sm text-muted mb-3">Contributeur à la communauté data science &amp; machine
+                            learning de Kaggle</p>
+                        <span class="code-font text-xs text-sky-300 group-hover:text-sky-200 inline-flex items-center gap-1.5">kaggle.com/loicyves
+                            <i class="fas fa-arrow-up-right-from-square text-[10px]"></i></span>
+                    </div>
+                </a>
                 <div class="glass lift rounded-2xl p-6 flex gap-4 reveal">
                     <div class="icon-tile bg-amber-500/15 text-amber-300"><i class="fas fa-medal"></i></div>
                     <div>
@@ -1971,14 +1020,28 @@
     <!-- ================= CONTACT ================= -->
     <section id="contact" class="py-24 px-6">
         <div class="max-w-4xl mx-auto glass grad-border p-8 md:p-14 text-center reveal">
-            <p class="eyebrow mb-3">// 04 — contact</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-5">Travaillons <span
-                    class="gradient-text">ensemble</span></h2>
+            <p class="eyebrow mb-3">// 06 — contact</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-5">Un projet IA en tête ?<br><span
+                    class="gradient-text">Parlons-en.</span></h2>
             <p class="text-muted mb-10 max-w-xl mx-auto leading-relaxed">Ouvert aux missions freelance, collaborations et
                 échanges techniques autour de l'IA agentique, du LLMOps et de l'infrastructure.</p>
+            <ol class="grid sm:grid-cols-3 gap-3 text-left mb-10">
+                <li class="rounded-xl p-4 border" style="border-color:var(--line);background:rgba(2,6,23,.4)">
+                    <span class="code-font text-xs text-sky-300">01</span>
+                    <p class="text-sm mt-1">Vous me décrivez votre besoin</p>
+                </li>
+                <li class="rounded-xl p-4 border" style="border-color:var(--line);background:rgba(2,6,23,.4)">
+                    <span class="code-font text-xs text-sky-300">02</span>
+                    <p class="text-sm mt-1">On en discute en visio</p>
+                </li>
+                <li class="rounded-xl p-4 border" style="border-color:var(--line);background:rgba(2,6,23,.4)">
+                    <span class="code-font text-xs text-sky-300">03</span>
+                    <p class="text-sm mt-1">Je vous propose une approche et un plan</p>
+                </li>
+            </ol>
             <div class="flex flex-wrap justify-center gap-3 mb-8">
-                <a href="mailto:yvesloic58@gmail.com" class="btn btn-primary"><i class="fas fa-envelope"></i>
-                    yvesloic58@gmail.com</a>
+                <a href="mailto:yvesloic58@gmail.com?subject=Projet%20IA" class="btn btn-primary"><i
+                        class="fas fa-envelope"></i> yvesloic58@gmail.com</a>
                 <button id="copyEmail" class="btn btn-ghost" aria-label="Copier l'adresse email"><i
                         class="far fa-copy"></i> <span>Copier</span></button>
             </div>
@@ -1987,6 +1050,8 @@
                         class="fab fa-github"></i> GitHub</a>
                 <a href="https://linkedin.com/in/yves-loic" target="_blank" rel="noopener" class="btn btn-ghost"><i
                         class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://www.kaggle.com/loicyves" target="_blank" rel="noopener" class="btn btn-ghost"><i
+                        class="fab fa-kaggle"></i> Kaggle</a>
                 <a href="https://wa.me/261329264306" target="_blank" rel="noopener" class="btn btn-ghost"><i
                         class="fab fa-whatsapp"></i> +261 32 92 643 06</a>
                 <a href="assets/Yves_Loic_SOATIANAINA_CV.pdf" target="_blank" rel="noopener" class="btn btn-ghost"><i
@@ -2000,276 +1065,9 @@
                 Engineer</span></p>
     </footer>
 
-    <script>
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Mobile menu
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        menuBtn.addEventListener('click', () => {
-            const open = mobileMenu.classList.toggle('hidden') === false;
-            menuBtn.setAttribute('aria-expanded', open);
-            menuBtn.querySelector('i').className = open ? 'fas fa-xmark' : 'fas fa-bars';
-        });
-        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-            menuBtn.setAttribute('aria-expanded', false);
-            menuBtn.querySelector('i').className = 'fas fa-bars';
-        }));
-
-        // Reveal on scroll
-        const io = new IntersectionObserver(entries => entries.forEach(e => {
-            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) }
-        }), { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-        // Active nav link
-        const links = document.querySelectorAll('#navLinks .nav-link');
-        const spy = new IntersectionObserver(entries => entries.forEach(e => {
-            if (e.isIntersecting) links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
-        }), { rootMargin: '-45% 0px -50% 0px' });
-        document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
-
-        // Typed role
-        (function typed() {
-            const el = document.getElementById('typed');
-            const roles = ['AI Engineer', 'LLMOps Engineer', 'Agent Builder', 'RAG & Kubernetes'];
-            if (reduceMotion) { el.textContent = 'AI Engineer // LLMOps Engineer'; return }
-            let r = 0, i = roles[0].length, del = true;
-            setTimeout(function tick() {
-                const word = roles[r];
-                i += del ? -1 : 1;
-                el.textContent = word.slice(0, i);
-                let wait = del ? 45 : 85;
-                if (!del && i === word.length) { del = true; wait = 2200 }
-                else if (del && i === 0) { del = false; r = (r + 1) % roles.length; wait = 300 }
-                setTimeout(tick, wait);
-            }, 2200);
-        })();
-
-        // Story : 5 actes en boucle (le CSS pilote tout via data-act)
-        (function story() {
-            const root = document.getElementById('story');
-            if (!root) return;
-            const dots = root.querySelectorAll('.story-dot');
-            const DUR = [5200, 6600, 6200, 5600, 8200];
-            let act = 0, timer = null, visible = false;
-            const mark = n => dots.forEach(d => d.classList.toggle('active', +d.dataset.act === n));
-            function set(n) { act = n; root.dataset.act = n; mark(n) }
-            function snapTo(n) {
-                // repart d'un état neutre (client hors-champ, robot démonté) sans transition
-                root.classList.add('reset');
-                root.dataset.act = 0;
-                void root.offsetWidth;
-                root.classList.remove('reset');
-                requestAnimationFrame(() => set(n));
-            }
-            function schedule() { clearTimeout(timer); if (visible) timer = setTimeout(advance, DUR[act - 1]) }
-            function advance() { act === 5 ? snapTo(1) : set(act + 1); schedule() }
-            dots.forEach(d => d.addEventListener('click', () => {
-                const n = +d.dataset.act;
-                n < act ? snapTo(n) : set(n);
-                schedule();
-            }));
-            if (reduceMotion) { root.classList.add('static'); set(5); return }
-            new IntersectionObserver(entries => {
-                visible = entries[0].isIntersecting;
-                if (visible && !act) snapTo(1);
-                schedule();
-            }, { threshold: 0.25 }).observe(root);
-        })();
-
-        // Project spotlight
-        document.querySelectorAll('.project').forEach(card => card.addEventListener('pointermove', e => {
-            const r = card.getBoundingClientRect();
-            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-            card.style.setProperty('--my', (e.clientY - r.top) + 'px');
-        }));
-
-        // Project filters
-        const filterBtns = document.querySelectorAll('#filters .filter-btn');
-        filterBtns.forEach(btn => btn.addEventListener('click', () => {
-            const f = btn.dataset.filter;
-            filterBtns.forEach(b => b.classList.toggle('active', b === btn));
-            document.querySelectorAll('#projects .project').forEach(p => {
-                p.classList.toggle('is-hidden', f !== 'all' && p.dataset.cat !== f);
-                p.classList.add('in');
-            });
-        }));
-
-        // Copy email
-        const copyBtn = document.getElementById('copyEmail');
-        copyBtn.addEventListener('click', async () => {
-            const label = copyBtn.querySelector('span').firstChild;
-            const L = (fr, en) => currentLang === 'en' ? en : fr;
-            try {
-                await navigator.clipboard.writeText('yvesloic58@gmail.com');
-                label.nodeValue = L('Copié !', 'Copied!');
-                copyBtn.querySelector('i').className = 'fas fa-check text-emerald-400';
-            } catch (e) {
-                label.nodeValue = 'yvesloic58@gmail.com';
-            }
-            setTimeout(() => {
-                applyLang(currentLang);
-                copyBtn.querySelector('i').className = 'far fa-copy';
-            }, 2000);
-        });
-
-        // ---------- i18n (FR par défaut, EN au clic) ----------
-        const EN = {
-            'Réalisations': 'Work',
-            'Distinctions': 'Awards',
-            'Télécharger le CV': 'Download my CV',
-            'Disponible pour de nouvelles missions': 'Available for new missions',
-            'Je vous aide à concevoir vos besoins en': 'I help you turn your needs into',
-            'IA agentique': 'agentic AI',
-            ', du prototype à la production — infrastructure': ', from prototype to production — ',
-            ', pipelines': ' infrastructure, ',
-            ', RAG & observabilité. Full remote depuis Antananarivo.': ' pipelines, RAG & observability. Fully remote from Antananarivo.',
-            'Voir mes réalisations': 'See my work',
-            "😩 Je n'en peux plus…": "😩 I can't take it anymore…",
-            'Il me faut :': 'I need:',
-            '🤖 des agents IA': '🤖 AI agents',
-            '📚 un RAG fiable': '📚 a reliable RAG',
-            "⚙️ de l'automatisation": '⚙️ automation',
-            'Compris ! 👍': 'Got it! 👍',
-            'Je te fabrique ça 🔧': "I'll build it for you 🔧",
-            'Voilà ton robot 🎁': "Here's your robot 🎁",
-            'Merci ! 🙌': 'Thank you! 🙌',
-            'À nous de jouer 💪': "Let's go! 💪",
-            'Un client à bout': 'A client at breaking point',
-            'Il me confie son besoin': 'They tell me what they need',
-            'Je fabrique son robot': 'I build their robot',
-            'Je le lui livre': 'I deliver it',
-            'Il écrase la concurrence': 'They crush the competition',
-            'Me contacter': 'Get in touch',
-            '"résume le contrat et crée la fiche CRM"': '"summarize the contract and create the CRM record"',
-            '3 étapes · LangGraph': '3 steps · LangGraph',
-            'in 4.2s · 1 842 tokens · cache hit': 'in 4.2s · 1,842 tokens · cache hit',
-            'outils agentiques intégrés': 'agentic tools integrated',
-            'modèles LLM orchestrés': 'LLM models orchestrated',
-            'ans en LLMOps & agent harness': 'years in LLMOps & agent harness',
-            'infra de production': 'production infrastructure',
-            '// 01 — réalisations': '// 01 — work',
-            'Sous le': 'Under the',
-            'capot': 'hood',
-            'AI & LLMOps Engineer, je collabore avec des plateformes SAAS AI Hub comme': 'AI & LLMOps Engineer, I work with SaaS AI Hub platforms like',
-            'et': 'and',
-            "— de la production au quotidien jusqu'aux projets open source.": '— from day-to-day production work to open source projects.',
-            'Tout': 'All',
-            'Projets': 'Projects',
-            "Conception et intégration de l'écosystème agentique de la plateforme SAAS AI Hub.": 'Design and integration of the agentic ecosystem of the SaaS AI Hub platform.',
-            '60+ outils agentiques': '60+ agentic tools',
-            ': Odoo CRM, Google Drive Toolkit, MCP Protocol, générateurs PDF/DOCX, pipeline OCR': ': Odoo CRM, Google Drive Toolkit, MCP Protocol, PDF/DOCX generators, OCR pipeline',
-            '80+ modèles LLM': '80+ LLM models',
-            'Intégrations MCP': 'MCP integrations',
-            'Agents IA': 'AI agents',
-            "SAAS AI Hub souverain hébergé en France, white-label de Swiftask priorisant les IA open source. J'optimise le déploiement et l'inférence des modèles hébergés par DRI, de l'inférence jusqu'à l'usage agentique des end-users.": 'Sovereign SaaS AI Hub hosted in France, white-label of Swiftask prioritizing open source AI. I optimize the deployment and inference of the models hosted by DRI, from inference all the way to agentic usage by end-users.',
-            'Serving de LLMs': 'LLM serving',
-            'hébergés par DRI : vLLM, Ollama': 'hosted by DRI: vLLM, Ollama',
-            'Orchestration Kubernetes': 'Kubernetes orchestration',
-            'complète & CI/CD multi-environnements': 'end-to-end & multi-environment CI/CD',
-            '& observabilité de la plateforme': '& platform observability',
-            'Intégration & catégorisation': 'Integration & categorization',
-            'de modèles souverains': 'of sovereign models',
-            'Souverain': 'Sovereign',
-            'Projet solo · A → Z': 'Solo project · A → Z',
-            'RAG complet': 'Complete RAG',
-            'texte + images': 'text + images',
-            ': ingestion PDF/PNG/JPG, embeddings BGE-M3 (dense+sparse) & CLIP, Milvus hybride, génération GPT-4o en streaming avec fallback LLaVA.': ': PDF/PNG/JPG ingestion, BGE-M3 (dense+sparse) & CLIP embeddings, hybrid Milvus, GPT-4o streaming generation with LLaVA fallback.',
-            'détails techniques': 'technical details',
-            'Recherche hybride': 'Hybrid search',
-            ': HNSW cosine + BM25, fusion RRF': ': HNSW cosine + BM25, RRF fusion',
-            'Cache 2 niveaux': '2-level cache',
-            'Redis : exact (MD5) + sémantique (≥ 0.92)': 'Redis: exact (MD5) + semantic (≥ 0.92)',
-            'Évaluation': 'Evaluation',
-            'RAGAS sur 20 Q&A': 'RAGAS on 20 Q&As',
-            ': Docker Compose, Tenacity, ingestion idempotente': ': Docker Compose, Tenacity, idempotent ingestion',
-            'Voir le repo': 'View repo',
-            'Voir la PR': 'View PR',
-            'Contribution au dépôt': 'Contribution to the',
-            '. Les réponses LLM en Markdown étaient vocalisées littéralement par le TTS — ce correctif nettoie la syntaxe avant la synthèse vocale pour un rendu naturel.': ' repository. LLM responses in Markdown were being read out literally by the TTS — this fix cleans the syntax before speech synthesis for a natural result.',
-            'Projet solo': 'Solo project',
-            "Bot d'orientation universitaire pour Madagascar, propulsé par": 'University guidance bot for Madagascar, powered by',
-            'quantisé et exécuté en local, avec retrieval sémantique': 'quantized and run locally, with semantic retrieval using',
-            'et interface': 'and a web interface built with',
-            'Modèle local': 'Local model',
-            ': GGML q4_0, aucune dépendance cloud': ': GGML q4_0, no cloud dependency',
-            ": Pinecone pour l'indexation des établissements": ': Pinecone to index institutions',
-            '// 02 — stack': '// 02 — stack',
-            'Ma': 'My',
-            'boîte à outils': 'toolbox',
-            "Ce que j'utilise au quotidien pour construire, déployer et monitorer des systèmes d'IA en production.": 'What I use every day to build, deploy and monitor AI systems in production.',
-            'Agents IA & Workflows': 'AI Agents & Workflows',
-            'Bases vectorielles': 'Vector databases',
-            '// 03 — distinctions': '// 03 — awards',
-            'Distinctions &': 'Awards &',
-            'communauté': 'community',
-            "Médaille d'argent": 'Silver medal',
-            'Ambassadeur Madagascar': 'Madagascar ambassador',
-            'Intervenant Google I/O 2024': 'Speaker at Google I/O 2024',
-            'Talk sur les nouveautés de Gemini': "Talk on what's new in Gemini",
-            'Master Big Data & IA': "Master's in Big Data & AI",
-            'Big Data et Intelligence Artificielle': 'Big Data and Artificial Intelligence',
-            'Articles techniques': 'Technical articles',
-            'Organisation du DevFest 2024': 'DevFest 2024 organizer',
-            'Travaillons': "Let's work",
-            'ensemble': 'together',
-            "Ouvert aux missions freelance, collaborations et échanges techniques autour de l'IA agentique, du LLMOps et de l'infrastructure.": 'Open to freelance assignments, collaborations and technical discussions around agentic AI, LLMOps and infrastructure.',
-            'Copier': 'Copy'
-        };
-        const EN_ATTR = {
-            'Langue': 'Language',
-            'Animation : un client épuisé me confie son besoin, je fabrique son robot, je le lui livre et il écrase la concurrence': 'Animation: an exhausted client tells me what they need, I build their robot, I deliver it and they crush the competition',
-            "Étapes de l'histoire": 'Story steps',
-            'Étape 1': 'Step 1', 'Étape 2': 'Step 2', 'Étape 3': 'Step 3', 'Étape 4': 'Step 4', 'Étape 5': 'Step 5',
-            'Portrait de Yves Loïc SOATIANAINA en tenue de diplômé': 'Portrait of Yves Loïc SOATIANAINA in graduation attire',
-            'Ouvrir le menu': 'Open menu',
-            'Filtrer les réalisations': 'Filter work',
-            "Copier l'adresse email": 'Copy email address',
-            'Logo IA Souveraine': 'IA Souveraine logo',
-            'Logo Llama 2': 'Llama 2 logo',
-            "Schéma d'un système RAG multimodal : images, texte et graphiques vers un modèle": 'Diagram of a multimodal RAG system: images, text and charts feeding a model',
-            'Dépôt GitHub huggingface/speech-to-speech': 'GitHub repository huggingface/speech-to-speech'
-        };
-        const EN_META = 'Portfolio of Yves Loïc SOATIANAINA, AI & LLMOps Engineer: AI agents, RAG, LLM serving and Kubernetes infrastructure.';
-        const metaDesc = document.querySelector('meta[name="description"]');
-        const FR_META = metaDesc.getAttribute('content');
-        const norm = t => t.replace(/\s+/g, ' ').trim();
-
-        const textNodes = [];
-        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-            acceptNode: n => n.parentElement.closest('script, style, #typed') || !norm(n.nodeValue) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
-        });
-        while (walker.nextNode()) textNodes.push({ node: walker.currentNode, fr: walker.currentNode.nodeValue });
-        const attrNodes = [...document.querySelectorAll('[aria-label], img[alt]')].flatMap(el =>
-            ['aria-label', 'alt'].filter(a => el.hasAttribute(a)).map(a => ({ el, a, fr: el.getAttribute(a) })));
-
-        let currentLang = 'fr';
-        function applyLang(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang;
-            textNodes.forEach(({ node, fr }) => {
-                const en = lang === 'en' ? EN[norm(fr)] : undefined;
-                if (en === undefined) { node.nodeValue = fr; return }
-                if (en !== en.trim()) { node.nodeValue = en; return }
-                node.nodeValue = fr.match(/^\s*/)[0] + en + fr.match(/\s*$/)[0];
-            });
-            attrNodes.forEach(({ el, a, fr }) => el.setAttribute(a, lang === 'en' && EN_ATTR[fr] ? EN_ATTR[fr] : fr));
-            metaDesc.setAttribute('content', lang === 'en' ? EN_META : FR_META);
-            document.querySelectorAll('#langSwitch button').forEach(b => {
-                const on = b.dataset.lang === lang;
-                b.classList.toggle('active', on);
-                b.setAttribute('aria-pressed', on);
-            });
-            try { localStorage.setItem('lang', lang) } catch (e) { }
-        }
-        document.querySelectorAll('#langSwitch button').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
-        let saved = null;
-        try { saved = localStorage.getItem('lang') } catch (e) { }
-        if (saved === 'en') applyLang('en');
-    </script>
+    <script src="js/main.js"></script>
+    <script src="js/story.js"></script>
+    <script src="js/i18n.js"></script>
 </body>
 
 </html>
